@@ -71,7 +71,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <small>Member since Nov. 2012</small>
                 </p>
               </li>
-              <!-- Menu Body -->
+
+              {{-- <!-- Menu Body -->
               <li class="user-body">
                 <div class="row">
                   <div class="col-xs-4 text-center">
@@ -85,7 +86,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </div>
                 </div>
                 <!-- /.row -->
-              </li>
+              </li> --}}
+              
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
