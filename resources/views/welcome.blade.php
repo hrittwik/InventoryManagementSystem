@@ -7,3 +7,4 @@
 @section('content')
 	Welcome to Inventory Management System!
 @endsection
+
