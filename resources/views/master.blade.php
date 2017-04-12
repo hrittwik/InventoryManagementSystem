@@ -21,6 +21,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<!-- AdminLTE Skins -->
 	<link rel="stylesheet" href="assets/dist/css/skins/skin-purple.css">
 
+	{{-- page based CSS --}}
+	@yield('CSS')
+
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -108,7 +111,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		</nav>
 	</header>
 
-			@include('layouts.nav')
+		@include('layouts.nav')
 
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
@@ -147,6 +150,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- AdminLTE App -->
 <script src="assets/dist/js/app.min.js"></script>
 
+{{-- page based JS --}}
 @yield('JavaScript')
 
 </body>
