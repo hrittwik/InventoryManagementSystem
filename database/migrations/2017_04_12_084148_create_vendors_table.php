@@ -17,7 +17,7 @@ class CreateVendorsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('contact');
-            $table->string('location');
+            $table->string('address');
             $table->unique('name');
             $table->timestamps();
         });
