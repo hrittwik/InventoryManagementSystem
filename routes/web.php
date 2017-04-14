@@ -16,3 +16,9 @@ Route::get('/', function () {
 });
 
 Route::get('/vendor', 'VendorController@index');
+Route::get('/vendor/getAll', 'VendorController@getAll');
+
+/* api methods */
+Route::group(['prefix' => 'api'], function () {
+    Route::get('/vendor/GetAll/', 'VendorController@getAll');
+});
