@@ -4,17 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use PhpParser\Builder\Class_;
-use App\Repositories\VendorRepository;
+use App\Vendor;
 
 class VendorController extends Controller
 {
-    protected $vendorRepository;
-
-    public function __construct()
-    {
-        $this->vendorRepository = new VendorRepository();
-    }
-
     public function index() {
 
         $menu = "vendor";
@@ -24,6 +17,6 @@ class VendorController extends Controller
 
     public function getAll() {
 
-        return $this->vendorRepository->all();
+        return Vendor::all();
     }
 }
