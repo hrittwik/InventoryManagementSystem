@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.master')
 
 @section('CSS')
 
@@ -53,22 +53,23 @@
     <div id="jsGrid" class="jsgrid-cell jsgrid-pager"></div>
 
     <div id="detailsDialog">
-        <form id="detailsForm" method="post" autocomplete="off">
+        <form id="detailsForm" autocomplete="off">
             {{ csrf_field() }}
             <div class="container-fluid">
                 <br/>
                 <div class="row form-group">
-                    <label class="col-md-4" for="name">Name:</label>
+                    <label class="col-md-4" for="name" style="text-align: center">Name:</label>
                     <input class="col-md-8" id="name" name="name" type="text" />
+                    <input id="id" name="id" type="hidden" />
                 </div>
 
                 <div class="row form-group">
-                    <label class="col-md-4" for="age">Contact:</label>
-                    <input class="col-md-8" id="contact" name="contact" type="number" />
+                    <label class="col-md-4" for="contact" style="text-align: center">Contact:</label>
+                    <input class="col-md-8" id="contact" name="contact" type="text" />
                 </div>
 
                 <div class="row form-group">
-                    <label class="col-md-4" for="address">Address:</label>
+                    <label class="col-md-4" for="address" style="text-align: center">Address:</label>
                     <input class="col-md-8" id="address" name="address" type="text" />
                 </div>
 
@@ -110,7 +111,7 @@
                 sorting: true,
 
                 deleteConfirm: function(item) {
-                    return "The vendor \"" + item.Name + "\" will be removed. Are you sure?";
+                    return "The vendor \"" + item.name + "\" will be removed. Are you sure?";
                 },
                 rowClick: function(args) {
                     showDetailsDialog("Edit", args.item);
@@ -121,12 +122,75 @@
 
                         return $.ajax({
                             type: "GET",
-                            url: "/vendor/getAll",
+                            url: "/vendor/GetAll",
+                        });
+
+                    },
+                    insertItem: function (item) {
+
+                        var CSRF_TOKEN = $('input[name="_token"]').attr('value');
+
+                        var jsonData = {
+                            _token: CSRF_TOKEN,
+                            name: item.name,
+                            contact: item.contact,
+                            address: item.address
+                        };
+
+                        return $.ajax({
+                            type: "POST",
+                            url: "/vendor/store",
+                            dataType: "JSON",
+                            data: jsonData,
+                            error: function (data) {
+                                console.log(data);
+                                alert("Something went wrong!");
+                            }
                         });
                     },
-                    updateItem: function () {
-                        console.log('updateItem');
-                    }
+                    updateItem: function (item) {
+
+                        var CSRF_TOKEN = $('input[name="_token"]').attr('value');
+
+                        return $.ajax({
+                            type: "PATCH",
+                            url: "/vendor/update",
+                            dataType: "JSON",
+                            data: {
+                                _token: CSRF_TOKEN,
+                                id: item.id,
+                                name: item.name,
+                                contact: item.contact,
+                                address: item.address
+                            },
+                            error: function (response) {
+                                alert('Something went wrong!');
+                            }
+
+                        });
+                    },
+                    deleteItem: function (item) {
+
+                        var CSRF_TOKEN = $('input[name="_token"]').attr('value');
+
+                        return $.ajax({
+                            type: "DELETE",
+                            url: "/vendor/delete",
+                            data: {
+                                _token: CSRF_TOKEN,
+                                id: item.id
+                            },
+                            success: function (response) {
+                                console.log('success');
+                                alert(response);
+                            },
+                            error: function (response) {
+                                console.log('error');
+                                alert("Something went wrong!");
+                            }
+                        });
+
+                    },
                 },
 
                 fields: [
@@ -143,30 +207,59 @@
                                 .on("click", function () {
                                     showDetailsDialog("Add", {});
                                 });
-                        }
+                        },
                     }
                 ]
             });
 
             $("#detailsDialog").dialog({
                 autoOpen: false,
-                width: 400,
+                width: "40%",
                 close: function() {
                     $("#detailsForm").validate().resetForm();
                     $("#detailsForm").find(".error").removeClass("error");
                 }
             });
 
+
+
+
+            $.validator.addMethod("unique", function (value, element) {
+                var id = ($('#id').val() != '' ? $('#id').val() : '');
+
+                var isUnique = true;
+
+                $.ajax({
+                    type: "GET",
+                    url: "/vendor/CheckUniqueName",
+                    data: {
+                        id: id,
+                        name: value
+                    },
+                    async: false,
+                    success: function (response) {
+
+                        isUnique = (response == 'false' ? false : true);
+                    }
+                });
+
+                return isUnique;
+            });
+
+
             $("#detailsForm").validate({
                 rules: {
                     name: {
                         required: true,
-                        lettersonly: true
+                        unique: true,
                     },
                     contact: "required"
                 },
                 messages: {
-                    name: "Please enter name",
+                    name: {
+                        required: "This field is required",
+                        unique: "Name must be a unique",
+                    },
                     contact: "Please enter contact number",
                 },
                 submitHandler: function() {
@@ -178,6 +271,7 @@
 
             var showDetailsDialog = function(dialogType, vendor) {
 
+                $('#id').val(vendor.id);
                 $("#name").val(vendor.name);
                 $("#contact").val(vendor.contact);
                 $("#address").val(vendor.address);
@@ -191,10 +285,10 @@
             };
 
             var saveVendor = function(vendor, isNew) {
-                console.log(vendor);
+
                 $.extend(vendor, {
                     name: $("#name").val(),
-                    contact: parseInt($("#contact").val(), 10),
+                    contact: $("#contact").val(),
                     address: $("#address").val(),
                 });
 

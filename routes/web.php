@@ -12,11 +12,15 @@
 */
 
 Route::get('/', function () {
-    return view('welcome')->with('menu', $menu='');
+    return view('dashboard')->with('menu', $menu='');
 });
 
 Route::get('/vendor', 'VendorController@index');
-Route::get('/vendor/getAll', 'VendorController@getAll');
+Route::get('/vendor/GetAll', 'VendorController@GetAll');
+Route::get('/vendor/CheckUniqueName', 'VendorController@CheckUniqueName');
+Route::post('/vendor/store', 'VendorController@store');
+Route::patch('/vendor/update', 'VendorController@update');
+Route::delete('/vendor/delete', 'VendorController@destroy');
 
 /* api methods */
 Route::group(['prefix' => 'api'], function () {
