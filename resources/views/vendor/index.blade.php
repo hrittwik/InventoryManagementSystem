@@ -6,10 +6,10 @@
     <link type="text/css" rel="stylesheet" href="Scripts/Common/css/input-error.css" />
 
     {{-- CSS for responsive jsgrid --}}
-    <link type="text/css" rel="stylesheet" href="Scripts/Common/css/jsgird/jsGrid-responsive.css" />
+    <link type="text/css" rel="stylesheet" href="Scripts/Common/css/jsgrid/jsGrid-responsive.css" />
 
     {{-- CSS for jsGrid Capitalization--}}
-    <link type="text/css" rel="stylesheet" href="Scripts/Common/css/jsgird/jsGrid-Capitalization.css" />
+    <link type="text/css" rel="stylesheet" href="Scripts/Common/css/jsgrid/jsGrid-Capitalization.css" />
 
     {{-- CSS for jsGrid --}}
     <link type="text/css" rel="stylesheet" href="Scripts/Common/css/jsgrid/jsgrid.min.css" />
