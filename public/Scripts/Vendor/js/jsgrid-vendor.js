@@ -41,9 +41,12 @@ $(document).ready(function () {
                     url: "/vendor/store",
                     dataType: "JSON",
                     data: jsonData,
-                    error: function (data) {
-                        console.log(data);
-                        alert("Something went wrong!");
+                    error: function (response) {
+                        if(response.status == 422) {
+                            alert('Server Side Error!');
+                        } else {
+                            alert("Something went wrong!");
+                        }
                     }
                 });
             },
@@ -63,7 +66,11 @@ $(document).ready(function () {
                         address: item.address
                     },
                     error: function (response) {
-                        alert('Something went wrong!');
+                        if(response.status == 422) {
+                            alert('Server Side Error!');
+                        } else {
+                            alert("Something went wrong!");
+                        }
                     }
 
                 });

@@ -23,11 +23,20 @@ class VendorController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'name' => 'required|unique:vendors',
+            'contact' => 'required'
+        ]);
+
         return Vendor::create($request->all());
     }
 
     public function update(Request $request, Vendor $vendor)
     {
+        $this->validate($request, [
+            'name' => 'required|unique:vendors',
+            'contact' => 'required'
+        ]);
 
         $vendor = Vendor::findOrFail($request['id']);
 
