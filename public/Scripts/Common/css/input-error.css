@@ -1,0 +1,11 @@
+input.error, select.error {
+    border: 1px solid #ff9999;
+    background: #ffeeee;
+}
+
+label.error {
+    float: right;
+    /* margin-left: 100px;*/
+    /*font-size: .8em;*/
+    color: #ff6666;
+}
