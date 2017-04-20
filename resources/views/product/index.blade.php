@@ -25,39 +25,54 @@
 
     <div id="jsGrid" class="jsgrid-cell jsgrid-pager"></div>
 
+    {{-- dialog form --}}
     <div id="detailsDialog">
-        <form id="detailsForm" autocomplete="off">
-            {{ csrf_field() }}
+
+        {{ Form::open(array('id' => 'detailsForm', 'autocomplete' => 'off') ) }}
+
             <div class="container-fluid">
                 <br/>
+
                 <div class="row form-group">
-                    <label class="col-md-4" for="name" style="text-align: center">Name:</label>
-                    <input class="col-md-8" id="name" name="name" type="text" />
-                    <input id="id" name="id" type="hidden" />
+
+                    {{ Form::label('name', 'Name:', array('class' => 'col-md-4', 'style' => 'text-align: center')) }}
+                    {{ Form::text('name', null, array('class' => 'col-md-8', 'id' => 'name') ) }}
+
+                    {{ Form::hidden('id', null, array('id' => 'id')) }}
+
                 </div>
 
                 <div class="row form-group">
-                    <label class="col-md-4" for="short_name" style="text-align: center">Short Name:</label>
-                    <input class="col-md-8" id="short_name" name="short_name" type="text" />
+
+                    {{ Form::label('short_name', 'Short Name:', array('class' => 'col-md-4', 'style' => 'text-align: center')) }}
+                    {{ Form::text('short_name', null, array('class' => 'col-md-8', 'id' => 'short_name') ) }}
+
                 </div>
 
                 <div class="row form-group">
-                    <label class="col-md-4" for="unit_id" style="text-align: center">Unit:</label>
-                    <input class="col-md-8" id="unit_id" name="unit_id" type="text" />
+
+                    {{ Form::label('unit_id', 'Unit:', array('class' => 'col-md-4', 'style' => 'text-align: center')) }}
+                    {{ Form::text('unit_id', null, array('class' => 'col-md-8', 'id' => 'unit_id') ) }}
+
                 </div>
 
                 <div class="row form-group">
-                    <label class="col-md-4" for="description" style="text-align: center">Description:</label>
-                    <input class="col-md-8" id="description" name="description" type="text" placeholder="Optional"/>
+
+                    {{ Form::label('description', 'Description:', array('class' => 'col-md-4', 'style' => 'text-align: center')) }}
+                    {{ Form::text('description', null, array('class' => 'col-md-8', 'id' => 'description') ) }}
+
                 </div>
 
 
                 <div class="row form-group" style="text-align: center">
-                    <button type="submit" id="save">Save</button>
+
+                    {{ Form::submit('Save', array('id' => 'save') ) }}
+
                 </div>
             </div>
 
-        </form>
+        {{ Form::close() }}
+
     </div>
 
 @endsection

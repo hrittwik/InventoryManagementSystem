@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('name', 255);
             $table->string('short_name', 10);
             $table->string('description', 255);
-            $table->integer('user_id');
+            $table->integer('unit_id');
             $table->timestamps();
             $table->unique('short_name');
         });

@@ -115,20 +115,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper">
-		<!-- Content Header (Page header) -->
-		
+
 		<!-- Main content -->
 		<section class="content">
+
+			<!-- Content Header (Page header) -->
 			<h2>
 
 				@yield('page-title')
-		
+
 			</h2>
 
 			<hr style="border-style: inset;" />
 			<!-- Your Page Content Here -->
-			
-					@yield('content')
+
+				@yield('content')
 
 		</section>
 		<!-- /.content -->
