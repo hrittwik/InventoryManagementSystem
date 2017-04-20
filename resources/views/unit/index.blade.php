@@ -41,7 +41,7 @@
 
                 <div class="row form-group">
                     <label class="col-md-4" for="contact" style="text-align: center">Short Name:</label>
-                    <input class="col-md-8" id="contact" name="contact" type="text" />
+                    <input class="col-md-8" id="short_name" name="short_name" type="text" />
                 </div>
 
 

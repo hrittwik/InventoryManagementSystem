@@ -27,7 +27,7 @@ Route::delete('/vendor/delete', 'VendorController@destroy');
 //unit
 Route::get('/unit', 'UnitController@index');
 Route::get('/unit/GetAll', 'UnitController@GetAll');
-
+Route::post('/unit/store', 'UnitController@store');
 /* api methods */
 Route::group(['prefix' => 'api'], function () {
     Route::get('/vendor/GetAll/', 'VendorController@getAll');
