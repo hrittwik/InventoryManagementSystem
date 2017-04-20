@@ -8,9 +8,6 @@
     {{-- CSS for responsive jsgrid --}}
     <link type="text/css" rel="stylesheet" href="Scripts/Common/css/jsgrid/jsGrid-responsive.css" />
 
-    {{-- CSS for jsGrid Capitalization--}}
-    <link type="text/css" rel="stylesheet" href="Scripts/Common/css/jsgrid/jsGrid-Capitalization.css" />
-
     {{-- CSS for jsGrid --}}
     <link type="text/css" rel="stylesheet" href="Scripts/Common/css/jsgrid/jsgrid.min.css" />
     <link type="text/css" rel="stylesheet" href="Scripts/Common/css/jsgrid/jsgrid-theme.min.css" />
@@ -21,7 +18,7 @@
 @endsection
 
 @section('page-title')
-    Vendor
+    Product
 @endsection
 
 @section('content')
@@ -40,13 +37,18 @@
                 </div>
 
                 <div class="row form-group">
-                    <label class="col-md-4" for="contact" style="text-align: center">Contact:</label>
-                    <input class="col-md-8" id="contact" name="contact" type="text" />
+                    <label class="col-md-4" for="short_name" style="text-align: center">Short Name:</label>
+                    <input class="col-md-8" id="short_name" name="short_name" type="text" />
                 </div>
 
                 <div class="row form-group">
-                    <label class="col-md-4" for="address" style="text-align: center">Address:</label>
-                    <input class="col-md-8" id="address" name="address" type="text" />
+                    <label class="col-md-4" for="unit_id" style="text-align: center">Unit:</label>
+                    <input class="col-md-8" id="unit_id" name="unit_id" type="text" />
+                </div>
+
+                <div class="row form-group">
+                    <label class="col-md-4" for="description" style="text-align: center">Description:</label>
+                    <input class="col-md-8" id="description" name="description" type="text" placeholder="Optional"/>
                 </div>
 
 
@@ -72,7 +74,8 @@
     {{-- JS for jsGrid --}}
     <script type="text/javascript" src="Scripts/Common/js/jsgrid.min.js"></script>
 
-    {{-- Vendor jsgrid with input dialog and validation --}}
-    <script type="text/javascript" src="Scripts/Vendor/js/vendor-jsgrid.js"></script>
+    {{-- Product jsgrid with input dialog and validation --}}
+    <script type="text/javascript" src="Scripts/Product/js/product-jsgrid.js"></script>
 
 @endsection
+

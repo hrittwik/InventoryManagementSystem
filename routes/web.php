@@ -14,7 +14,10 @@
 Route::get('/', function () {
     return view('dashboard')->with('menu', $menu='');
 });
+/* Product Routes */
+Route::get('/product', 'ProductController@index');
 
+/* Vendor Routes */
 Route::get('/vendor', 'VendorController@index');
 Route::get('/vendor/GetAll', 'VendorController@GetAll');
 Route::get('/vendor/CheckUniqueName', 'VendorController@CheckUniqueName');

@@ -13,7 +13,7 @@ class VendorController extends Controller
 
         $menu = "vendor";
 
-        return view('vendor.index', compact('vendors'))->with('menu', $menu);
+        return view('vendor.index')->with('menu', $menu);
     }
 
     public function GetAll() {
