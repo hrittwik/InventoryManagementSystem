@@ -31,12 +31,12 @@ class UnitController extends Controller
         return Unit::create($request->all());
     }
 
-    public function CheckUniqueName(Request $request){
+    public function CheckUniqueShortName(Request $request){
 
-        $name = $request['short_name'];
+        $short_name = $request['short_name'];
         $id = $request['id'];
 
-        $unit = Unit::where('name', '=', $name)
+        $unit = Unit::where('short_name', '=', $short_name)
                       ->where('id', '!=', $id)
                       ->first();
 

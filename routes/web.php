@@ -27,7 +27,7 @@ Route::delete('/vendor/delete', 'VendorController@destroy');
 //unit
 Route::get('/unit', 'UnitController@index');
 Route::get('/unit/GetAll', 'UnitController@GetAll');
-Route::get('/unit/CheckUniqueName', 'UnitController@CheckUniqueName');
+Route::get('/unit/CheckUniqueShortName', 'UnitController@CheckUniqueShortName');
 Route::post('/unit/store', 'UnitController@store');
 /* api methods */
 Route::group(['prefix' => 'api'], function () {

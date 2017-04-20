@@ -21,7 +21,7 @@ $(document).ready(function () {
 
                 return $.ajax({
                     type: "GET",
-                    url: "/unit/GetAll",
+                    url: "/unit/GetAll"
                 });
 
             },
@@ -130,12 +130,14 @@ $(document).ready(function () {
 
     $.validator.addMethod("unique", function (value, element) {
         var id = ($('#id').val() != '' ? $('#id').val() : '');
+        console.log(id);
+        console.log(value);
 
         var isUnique = true;
 
         $.ajax({
             type: "GET",
-            url: "/unit/CheckUniqueName",
+            url: "/unit/CheckUniqueShortName",
             data: {
                 id: id,
                 short_name: value
@@ -185,7 +187,7 @@ $(document).ready(function () {
             saveunit(unit, dialogType === "Add");
         };
 
-        $("#detailsDialog").dialog("option", "title", dialogType + " unit")
+        $("#detailsDialog").dialog("option", "title", dialogType + " Unit")
             .dialog("open");
     };
 
