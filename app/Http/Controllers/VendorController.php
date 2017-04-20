@@ -33,8 +33,10 @@ class VendorController extends Controller
 
     public function update(Request $request, Vendor $vendor)
     {
+        $id = $request['id'];
+
         $this->validate($request, [
-            'name' => 'required|unique:vendors',
+            'name' => 'required|unique:vendors,name,'.$id,
             'contact' => 'required'
         ]);
 
@@ -65,11 +67,11 @@ class VendorController extends Controller
         $name = $request['name'];
         $id = $request['id'];
 
-        $vendorName = Vendor::where('name', '=', $name)
-                            ->where('id', '!=', $id)
-                            ->value('name');
+        $vendor = Vendor::where('name', '=', $name)
+                        ->where('id', '!=', $id)
+                        ->first();
 
-        if(count($vendorName) > 0) {
+        if(count($vendor) > 0) {
             return "false";
         }
 
