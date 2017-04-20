@@ -21,7 +21,7 @@
 @endsection
 
 @section('page-title')
-    Vendor
+    Unit
 @endsection
 
 @section('content')
@@ -40,13 +40,8 @@
                 </div>
 
                 <div class="row form-group">
-                    <label class="col-md-4" for="contact" style="text-align: center">Contact:</label>
+                    <label class="col-md-4" for="contact" style="text-align: center">Short Name:</label>
                     <input class="col-md-8" id="contact" name="contact" type="text" />
-                </div>
-
-                <div class="row form-group">
-                    <label class="col-md-4" for="address" style="text-align: center">Address:</label>
-                    <input class="col-md-8" id="address" name="address" type="text" />
                 </div>
 
 
@@ -72,8 +67,8 @@
     {{-- JS for jsGrid --}}
     <script type="text/javascript" src="Scripts/Common/js/jsgrid.min.js"></script>
 
-    {{-- Vendor jsgrid with input dialog and validation --}}
-    <script type="text/javascript" src="Scripts/Vendor/js/vendor-jsgrid.js"></script>
+    {{-- Unit jsgrid with input dialog and validation --}}
+    <script type="text/javascript" src="Scripts/Unit/js/unit-jsgrid.js"></script>
 
 
 @endsection
