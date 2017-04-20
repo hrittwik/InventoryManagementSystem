@@ -32,7 +32,7 @@ $(document).ready(function () {
                 var jsonData = {
                     _token: CSRF_TOKEN,
                     name: item.name,
-                    short_name: item.short_name,
+                    short_name: item.short_name
                 };
 
                 return $.ajax({
@@ -138,7 +138,7 @@ $(document).ready(function () {
             url: "/unit/CheckUniqueName",
             data: {
                 id: id,
-                name: value
+                short_name: value
             },
             async: false,
             success: function (response) {
@@ -153,18 +153,19 @@ $(document).ready(function () {
 
     $("#detailsForm").validate({
         rules: {
-            name: {
+            name: "required",
+            short_name: {
                 required: true,
                 unique: true,
-            },
-            contact: "required"
+            }
         },
         messages: {
-            name: {
+            name: "Please enter Name information",
+            short_name: {
                 required: "This field is required",
-                unique: "Name must be a unique",
+                unique: "Short Name must be a unique",
             },
-            contact: "Please enter contact information",
+
         },
         submitHandler: function() {
             formSubmitHandler();
@@ -174,6 +175,7 @@ $(document).ready(function () {
     var formSubmitHandler = $.noop;
 
     var showDetailsDialog = function(dialogType, unit) {
+
 
         $('#id').val(unit.id);
         $("#name").val(unit.name);
@@ -191,7 +193,7 @@ $(document).ready(function () {
 
         $.extend(unit, {
             name: $("#name").val(),
-            contact: $("#short_name").val(),
+            short_name: $("#short_name").val(),
         });
 
         $("#jsGrid").jsGrid(isNew ? "insertItem" : "updateItem", unit);
