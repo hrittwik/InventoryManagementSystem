@@ -29,33 +29,44 @@
     <div id="jsGrid" class="jsgrid-cell jsgrid-pager"></div>
 
     <div id="detailsDialog">
-        <form id="detailsForm" autocomplete="off">
-            {{ csrf_field() }}
+
+        {{ Form::open( array('id' => 'detailsForm', 'autocomplete' => 'off') ) }}
+
             <div class="container-fluid">
                 <br/>
                 <div class="row form-group">
-                    <label class="col-md-4" for="name" style="text-align: center">Name:</label>
-                    <input class="col-md-8" id="name" name="name" type="text" />
-                    <input id="id" name="id" type="hidden" />
+
+                    {{ Form::label('name', 'Name:', array('class' => 'col-md-4', 'style' => 'text-align: center')) }}
+                    {{ Form::text('name', null, array('class' => 'col-md-8', 'id' => 'name') ) }}
+
+                    {{ Form::hidden('id', null, array('id' => 'id')) }}
+
                 </div>
 
                 <div class="row form-group">
-                    <label class="col-md-4" for="contact" style="text-align: center">Contact:</label>
-                    <input class="col-md-8" id="contact" name="contact" type="text" />
+
+                    {{ Form::label('contact', 'Contact:', array('class' => 'col-md-4', 'style' => 'text-align: center')) }}
+                    {{ Form::text('contact', null, array('class' => 'col-md-8', 'id' => 'contact') ) }}
+
                 </div>
 
                 <div class="row form-group">
-                    <label class="col-md-4" for="address" style="text-align: center">Address:</label>
-                    <input class="col-md-8" id="address" name="address" type="text" />
+
+                    {{ Form::label('address', 'Address:', array('class' => 'col-md-4', 'style' => 'text-align: center')) }}
+                    {{ Form::text('address', null, array('class' => 'col-md-8', 'id' => 'address') ) }}
+
                 </div>
 
 
                 <div class="row form-group" style="text-align: center">
-                    <button type="submit" id="save">Save</button>
+
+                    {{ Form::submit('Save', array('id' => 'save') ) }}
+
                 </div>
             </div>
 
-        </form>
+        {{ Form::close() }}
+
     </div>
 
 @endsection

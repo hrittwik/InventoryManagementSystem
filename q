@@ -1,0 +1,157 @@
+[33mcommit 6e8f9fc5ddcf1b72eae07ac54bd98b02811c5a97[m
+Author: Shadman Ahmed <shadman.siam.ahmed@gmail.com>
+Date:   Thu Apr 20 21:24:39 2017 +0600
+
+    Add
+    - CheckUniqueName and GetAll for product added in ProductController
+    - routes added for producst in routes web
+
+[33mcommit 43c2e3c7b39414004615d89ddfd94b9437d4911b[m
+Author: Shadman Ahmed <shadman.siam.ahmed@gmail.com>
+Date:   Thu Apr 20 20:15:01 2017 +0600
+
+    Update
+    - vendor jsgrid java script renamed to vendor-jsgrid
+    - vendor index page reference change according to new name of
+      vendor-jsgrid
+    Add
+    - product index page
+    - product index action in ProductController
+    - product index page link in nav layouts
+
+[33mcommit d143b7243483e37b40a6d5513e2270026511f90e[m
+Author: Shadman Ahmed <shadman.siam.ahmed@gmail.com>
+Date:   Thu Apr 20 15:54:34 2017 +0600
+
+    Add
+    - Product and Unit model with one to one relationship
+    - Product and Unit tables
+    - Product and Unit controller
+
+[33mcommit 0e67664651ce54f0581f26304a5e22044058efcb[m
+Author: Shadman Ahmed <shadman.siam.ahmed@gmail.com>
+Date:   Thu Apr 20 14:05:41 2017 +0600
+
+    Fix
+    - Server side update validation in VendorController update action
+    - vendor object instead of name fetched in VendorController CheckUniqueName action
+
+[33mcommit f1fb7bf1a52ac443f5d71ba394e74406816060c9[m
+Author: Shadman Ahmed <shadman.siam.ahmed@gmail.com>
+Date:   Wed Apr 19 16:59:24 2017 +0600
+
+    Update
+    - Server side validation added for inserting and updating vendors
+    - client side error handling changed at jsgrid-vendor.js file
+
+[33mcommit 5a0043aad8d95caf97288bab58ddd3c58b621c15[m
+Author: Shadman Ahmed <shadman.siam.ahmed@gmail.com>
+Date:   Wed Apr 19 16:18:13 2017 +0600
+
+    Modified: vendor index file correct css reference added
+
+[33mcommit f28b3ab87bc8a77e87ad7cb166363c0f9edcbedb[m
+Author: Shadman Ahmed <shadman.siam.ahmed@gmail.com>
+Date:   Wed Apr 19 15:59:53 2017 +0600
+
+    Project Organized
+    - Vendor css and js files are segregated and moved to
+      public/scripts/vendor
+    - Common css and js are moved to public/scripts/common folder
+
+[33mcommit 25975051c54493a05a01d1bf6dd2c0a8661ce802[m
+Author: Shadman Ahmed <shadman.siam.ahmed@gmail.com>
+Date:   Tue Apr 18 14:08:46 2017 +0600
+
+    Update
+    - welcome file name changed to dashboard
+    - Vendor jsgrid controller method implemented
+    - VendorController store, update, delete actions implemented
+    - GetByName method in VendorController updated and renamed to
+    CheckUniqueName
+
+[33mcommit 8863307674ce77def01cdc946a8ff5d800d39595[m
+Author: Shadman Ahmed <shadman.siam.ahmed@gmail.com>
+Date:   Sun Apr 16 19:17:15 2017 +0600
+
+    initial commit
+
+[33mcommit 0117a134d764c3855438ac3af6b06cf8f7680bd1[m
+Merge: ee4d1a6 dd5f216
+Author: Shadman Ahmed <shadman.siam.ahmed@gmail.com>
+Date:   Sat Apr 15 00:34:01 2017 +0600
+
+    Merge branch 'develop' of https://github.com/ahmedShadman/InventoryManagementSystem into develop
+
+[33mcommit ee4d1a64fb69c4264afa1002f65c21025fb5d48c[m
+Author: Shadman Ahmed <shadman.siam.ahmed@gmail.com>
+Date:   Sat Apr 15 00:29:38 2017 +0600
+
+    Add
+    - VendorRepository added
+    - getAll action added in VendorController
+    Modified
+    - Vendor model class moved to EntityModels folder
+    - vendor index page updated
+    - routes file updated
+
+[33mcommit 7edb70ff7a96cf895ae527248989c248a90ebbd2[m
+Author: Shadman Ahmed <shadman.siam.ahmed@gmail.com>
+Date:   Thu Apr 13 16:39:19 2017 +0600
+
+    Update
+    - DB vendor table's column name location changed to address
+    - jsGrid for vendor index page updated
+
+[33mcommit dd5f2161237a434ad00585b4fd63ea47e6caf3c3[m
+Author: hrittwik <hrittwik@gmail.com>
+Date:   Thu Apr 13 16:22:50 2017 +0600
+
+    update readme
+
+[33mcommit 79dd29e95b8aae1e18b5e805be00ad1f483c43fe[m
+Author: Shadman Ahmed <shadman.siam.ahmed@gmail.com>
+Date:   Wed Apr 12 22:22:42 2017 +0600
+
+    Add
+    - jsGrid added in vendor index page
+    Update
+    - yield added in layout page for page specific CSS
+    - index action is updated for VendorController
+
+[33mcommit 22290a720da6b2a58c9f14f30d43167566cf4668[m
+Author: Shadman Ahmed <shadman.siam.ahmed@gmail.com>
+Date:   Wed Apr 12 17:04:46 2017 +0600
+
+    Add
+    - VendorController
+    - Vendor Model
+    - Vendor DB table
+    Update
+    - nav layout
+    - web route
+
+[33mcommit a6e905fa1a9dd5bc42eae5d7b680aea4511cad2b[m
+Author: Shadman Ahmed <shadman.siam.ahmed@gmail.com>
+Date:   Wed Apr 12 14:21:13 2017 +0600
+
+    update
+    - DB default string length is set
+
+[33mcommit a98268a9ee04def55a3f766eb0a94f3fa32aab6b[m
+Author: Shadman Ahmed <shadman.siam.ahmed@gmail.com>
+Date:   Tue Apr 11 21:19:57 2017 +0600
+
+    Update layout
+
+[33mcommit c5b3a72ae64507710d2fbf265240ab8bd925cc33[m
+Author: Shadman Ahmed <shadman.siam.ahmed@gmail.com>
+Date:   Mon Apr 10 23:25:09 2017 +0600
+
+    Update dropdown user menu
+
+[33mcommit 35f47faee9bf708008a72db284ce200ad88de339[m
+Author: Shadman Ahmed <shadman.siam.ahmed@gmail.com>
+Date:   Mon Apr 10 19:59:32 2017 +0600
+
+    First Commit
