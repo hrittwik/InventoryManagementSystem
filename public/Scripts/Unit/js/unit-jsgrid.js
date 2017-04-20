@@ -61,8 +61,7 @@ $(document).ready(function () {
                         _token: CSRF_TOKEN,
                         id: item.id,
                         name: item.name,
-                        contact: item.contact,
-                        address: item.address
+                        short_name: item.short_name
                     },
                     error: function (response) {
                         if(response.status == 422) {
