@@ -16,6 +16,8 @@ Route::get('/', function () {
 });
 /* Product Routes */
 Route::get('/product', 'ProductController@index');
+Route::get('/product/GetAll', 'ProductController@GetAll');
+Route::get('/product/CheckUniqueShortName', 'ProductController@CheckUniqueShortName');
 
 /* Vendor Routes */
 Route::get('/vendor', 'VendorController@index');

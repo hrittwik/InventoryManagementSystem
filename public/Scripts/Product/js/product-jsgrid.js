@@ -19,10 +19,10 @@ $(document).ready(function () {
         controller: {
             loadData: function () {
 
-                /*return $.ajax({
+                return $.ajax({
                     type: "GET",
                     url: "/product/GetAll",
-                });*/
+                });
 
             },
             insertItem: function (item) {
