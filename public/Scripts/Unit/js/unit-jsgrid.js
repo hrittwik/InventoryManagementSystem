@@ -10,7 +10,7 @@ $(document).ready(function () {
         sorting: true,
 
         deleteConfirm: function(item) {
-            return "The vendor \"" + item.name + "\" will be removed. Are you sure?";
+            return "The unit \"" + item.name + "\" will be removed. Are you sure?";
         },
         rowClick: function(args) {
             showDetailsDialog("Edit", args.item);
@@ -21,7 +21,7 @@ $(document).ready(function () {
 
                 return $.ajax({
                     type: "GET",
-                    url: "/vendor/GetAll",
+                    url: "/unit/GetAll"
                 });
 
             },
@@ -32,13 +32,12 @@ $(document).ready(function () {
                 var jsonData = {
                     _token: CSRF_TOKEN,
                     name: item.name,
-                    contact: item.contact,
-                    address: item.address
+                    short_name: item.short_name
                 };
 
                 return $.ajax({
                     type: "POST",
-                    url: "/vendor/store",
+                    url: "/unit/store",
                     dataType: "JSON",
                     data: jsonData,
                     error: function (response) {
@@ -54,19 +53,16 @@ $(document).ready(function () {
 
                 var CSRF_TOKEN = $('input[name="_token"]').attr('value');
 
-                var jsonData = {
-                    _token: CSRF_TOKEN,
-                    id: item.id,
-                    name: item.name,
-                    contact: item.contact,
-                    address: item.address
-                };
-
                 return $.ajax({
                     type: "PATCH",
-                    url: "/vendor/update",
+                    url: "/unit/update",
                     dataType: "JSON",
-                    data: jsonData,
+                    data: {
+                        _token: CSRF_TOKEN,
+                        id: item.id,
+                        name: item.name,
+                        short_name: item.short_name
+                    },
                     error: function (response) {
                         if(response.status == 422) {
                             alert('Server Side Error!');
@@ -83,7 +79,7 @@ $(document).ready(function () {
 
                 return $.ajax({
                     type: "DELETE",
-                    url: "/vendor/delete",
+                    url: "/unit/delete",
                     data: {
                         _token: CSRF_TOKEN,
                         id: item.id
@@ -102,9 +98,8 @@ $(document).ready(function () {
         },
 
         fields: [
-            { name: "name", type: "text", css: "capitalize", width: "33.3%" },
-            { name: "contact", type: "text", css: "capitalize", width: "33.3%" },
-            { name: "address", type: "text", css: "capitalize", width: "33.3%" },
+            { name: "name", title: "Name", type: "text", css: "text-transform:capitalize", width: "33.3%" },
+            { name: "short_name", title: "Short Name", type: "text", css: "text-transform:capitalize", width: "33.3%" },
             {
                 width: "16.67%",
                 type: "control",
@@ -129,17 +124,22 @@ $(document).ready(function () {
         }
     });
 
+
+
+
     $.validator.addMethod("unique", function (value, element) {
         var id = ($('#id').val() != '' ? $('#id').val() : '');
+        console.log(id);
+        console.log(value);
 
         var isUnique = true;
 
         $.ajax({
             type: "GET",
-            url: "/vendor/CheckUniqueName",
+            url: "/unit/CheckUniqueShortName",
             data: {
                 id: id,
-                name: value
+                short_name: value
             },
             async: false,
             success: function (response) {
@@ -151,20 +151,22 @@ $(document).ready(function () {
         return isUnique;
     });
 
+
     $("#detailsForm").validate({
         rules: {
-            name: {
+            name: "required",
+            short_name: {
                 required: true,
-                unique: true
-            },
-            contact: "required"
+                unique: true,
+            }
         },
         messages: {
-            name: {
+            name: "Please enter Name information",
+            short_name: {
                 required: "This field is required",
-                unique: "Name must be a unique"
+                unique: "Short Name must be a unique",
             },
-            contact: "Please enter contact information",
+
         },
         submitHandler: function() {
             formSubmitHandler();
@@ -173,30 +175,29 @@ $(document).ready(function () {
 
     var formSubmitHandler = $.noop;
 
-    var showDetailsDialog = function(dialogType, vendor) {
+    var showDetailsDialog = function(dialogType, unit) {
 
-        $('#id').val(vendor.id);
-        $("#name").val(vendor.name);
-        $("#contact").val(vendor.contact);
-        $("#address").val(vendor.address);
+
+        $('#id').val(unit.id);
+        $("#name").val(unit.name);
+        $("#short_name").val(unit.short_name);
 
         formSubmitHandler = function() {
-            saveVendor(vendor, dialogType === "Add");
+            saveunit(unit, dialogType === "Add");
         };
 
-        $("#detailsDialog").dialog("option", "title", dialogType + " vendor")
+        $("#detailsDialog").dialog("option", "title", dialogType + " Unit")
             .dialog("open");
     };
 
-    var saveVendor = function(vendor, isNew) {
+    var saveunit = function(unit, isNew) {
 
-        $.extend(vendor, {
+        $.extend(unit, {
             name: $("#name").val(),
-            contact: $("#contact").val(),
-            address: $("#address").val(),
+            short_name: $("#short_name").val(),
         });
 
-        $("#jsGrid").jsGrid(isNew ? "insertItem" : "updateItem", vendor);
+        $("#jsGrid").jsGrid(isNew ? "insertItem" : "updateItem", unit);
 
         $("#detailsDialog").dialog("close");
     };

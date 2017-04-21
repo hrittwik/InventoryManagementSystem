@@ -19,14 +19,33 @@
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
 
-        {{-- <li class="header">HEADER</li> --}}
+            {{-- <li class="header">HEADER</li> --}}
 
-        <!-- Optionally, you can add icons to the links -->
-            <li class="{{ ($menu == "" ? "active" : "#") }}"><a href="{{ url('/') }}"><i class="fa fa-home"></i> <span>Dashboard</span></a></li>
+            <!-- Optionally, you can add icons to the links -->
 
-            <li class="{{ ($menu == "product" ? "active" : "#") }}"><a href="{{ url('/product') }}"><i class="fa fa-folder" aria-hidden="true"></i> <span>Product</span></a></li>
+            <li class="{{ ($menu == "" ? "active" : "#") }}">
+                <a href="{{ url('/') }}"> <i class="fa fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
 
-            <li class="{{ ($menu == "vendor" ? "active" : "#") }}"><a href="{{ url('/vendor') }}"><i class="fa fa-building-o"></i> <span>Vendor</span></a></li>
+            <li class="{{ ($menu == "product" ? "active" : "#") }}">
+                <a href="{{ url('/product') }}"><i class="fa fa-folder" aria-hidden="true"></i>
+                    <span>Product</span>
+                </a>
+            </li>
+
+            <li class="{{ ($menu == "vendor" ? "active" : "#") }}">
+                <a href="{{ url('/vendor') }}"><i class="fa fa-building-o"></i>
+                    <span>Vendor</span>
+                </a>
+            </li>
+
+            <li class="{{ ($menu == "unit" ? "active" : "#") }}">
+                <a href="{{ url('/unit') }}"><i class="fa fa-building-o"></i>
+                    <span>Unit</span>
+                </a>
+            </li>
             {{--<li class="treeview">
               <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
                 <span class="pull-right-container">
@@ -38,8 +57,8 @@
                 <li><a href="#">Link in level 2</a></li>
               </ul>
             </li>--}}
-        </ul>
-        <!-- /.sidebar-menu -->
+      </ul>
+      <!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->
 </aside>

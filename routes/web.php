@@ -30,6 +30,15 @@ Route::post('/vendor/store', 'VendorController@store');
 Route::patch('/vendor/update', 'VendorController@update');
 Route::delete('/vendor/delete', 'VendorController@destroy');
 
+
+/* Unit Routes */
+Route::get('/unit', 'UnitController@index');
+Route::get('/unit/GetAll', 'UnitController@GetAll');
+Route::get('/unit/CheckUniqueShortName', 'UnitController@CheckUniqueShortName');
+Route::post('/unit/store', 'UnitController@store');
+Route::patch('/unit/update', 'UnitController@update');
+Route::delete('/unit/delete', 'UnitController@destroy');
+
 /* api methods */
 Route::group(['prefix' => 'api'], function () {
     Route::get('/vendor/GetAll/', 'VendorController@getAll');

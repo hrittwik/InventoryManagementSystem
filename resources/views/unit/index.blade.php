@@ -21,7 +21,7 @@
 @endsection
 
 @section('page-title')
-    Vendor
+    Unit
 @endsection
 
 @section('content')
@@ -29,44 +29,28 @@
     <div id="jsGrid" class="jsgrid-cell jsgrid-pager"></div>
 
     <div id="detailsDialog">
-
-        {{ Form::open( array('id' => 'detailsForm', 'autocomplete' => 'off') ) }}
-
+        <form id="detailsForm" autocomplete="off">
+            {{ csrf_field() }}
             <div class="container-fluid">
                 <br/>
                 <div class="row form-group">
-
-                    {{ Form::label('name', 'Name:', array('class' => 'col-md-4', 'style' => 'text-align: center')) }}
-                    {{ Form::text('name', null, array('class' => 'col-md-8', 'id' => 'name') ) }}
-
-                    {{ Form::hidden('id', null, array('id' => 'id')) }}
-
+                    <label class="col-md-4" for="name" style="text-align: center">Name:</label>
+                    <input class="col-md-8" id="name" name="name" type="text" />
+                    <input id="id" name="id" type="hidden" />
                 </div>
 
                 <div class="row form-group">
-
-                    {{ Form::label('contact', 'Contact:', array('class' => 'col-md-4', 'style' => 'text-align: center')) }}
-                    {{ Form::text('contact', null, array('class' => 'col-md-8', 'id' => 'contact') ) }}
-
-                </div>
-
-                <div class="row form-group">
-
-                    {{ Form::label('address', 'Address:', array('class' => 'col-md-4', 'style' => 'text-align: center')) }}
-                    {{ Form::text('address', null, array('class' => 'col-md-8', 'id' => 'address') ) }}
-
+                    <label class="col-md-4" for="short_name" style="text-align: center">Short Name:</label>
+                    <input class="col-md-8" id="short_name" name="short_name" type="text" />
                 </div>
 
 
                 <div class="row form-group" style="text-align: center">
-
-                    {{ Form::submit('Save', array('id' => 'save') ) }}
-
+                    <button type="submit" id="save">Save</button>
                 </div>
             </div>
 
-        {{ Form::close() }}
-
+        </form>
     </div>
 
 @endsection
@@ -83,7 +67,8 @@
     {{-- JS for jsGrid --}}
     <script type="text/javascript" src="Scripts/Common/js/jsgrid.min.js"></script>
 
-    {{-- Vendor jsgrid with input dialog and validation --}}
-    <script type="text/javascript" src="Scripts/Vendor/js/vendor-jsgrid.js"></script>
+    {{-- Unit jsgrid with input dialog and validation --}}
+    <script type="text/javascript" src="Scripts/Unit/js/unit-jsgrid.js"></script>
+
 
 @endsection
