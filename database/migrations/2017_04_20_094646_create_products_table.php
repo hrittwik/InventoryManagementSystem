@@ -17,8 +17,8 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('name', 255);
             $table->string('short_name', 10);
-            $table->string('description', 255);
             $table->integer('unit_id')->unsigned();
+            $table->string('description', 255);
             $table->timestamps();
             $table->unique('short_name');
         });
