@@ -16,7 +16,7 @@ class ProductController extends Controller
 
     public function GetAll() {
 
-        return Product::all();
+        return Product::find(1)->unit;
 
     }
 
