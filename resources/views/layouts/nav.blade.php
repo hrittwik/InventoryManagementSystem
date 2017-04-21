@@ -42,7 +42,7 @@
             </li>
 
             <li class="{{ ($menu == "unit" ? "active" : "#") }}">
-                <a href="{{ url('/unit') }}"><i class="fa fa-building-o"></i>
+                <a href="{{ url('/unit') }}"><i class="fa fa-balance-scale" aria-hidden="true"></i>
                     <span>Unit</span>
                 </a>
             </li>

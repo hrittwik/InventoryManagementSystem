@@ -17,7 +17,18 @@ class ProductController extends Controller
 
     public function GetAll() {
 
-        return Product::all();
+        return Product::with('unit')->get();
+        
+        /*$product = Product::findOrFail(1);
+
+        $product->update([
+            'name' => 'test',
+            'short_name' => 'test',
+            'unit_id' => '1',
+            'description' => 'test'
+        ]);
+
+        return $product->with('unit')->get();*/
 
     }
 
@@ -37,7 +48,7 @@ class ProductController extends Controller
             'description' => $request['description']
         ]);
 
-        return $product;
+        return $product->with('unit')->first();
     }
 
     public function destroy(Request $request) {

@@ -52,7 +52,7 @@
                 <div class="row form-group">
 
                     {{ Form::label('unit_id', 'Unit:', array('class' => 'col-md-4', 'style' => 'text-align: center')) }}
-                    {{ Form::text('unit_id', null, array('class' => 'col-md-8', 'id' => 'unit_id') ) }}
+                    {!! Form::select('unit_id', [], null, ['class' => 'col-md-8']) !!}
 
                 </div>
 

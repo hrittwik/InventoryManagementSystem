@@ -6,39 +6,31 @@ use Illuminate\Auth\Access\Response;
 use PhpParser\Builder\Class_;
 use Illuminate\Http\Request;
 use App\Unit;
+use App\Http\Requests\StoreUnitPost;
 
 class UnitController extends Controller
 {
     //
-    public function index(){
+    public function index() {
 
         $menu = "unit";
         return view('unit.index', compact('menu'));
     }
 
-    public function GetAll(){
+    public function GetAll() {
 
         return Unit::all();
     }
 
-    public function store(Request $request)
+    public function store(StoreUnitPost $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'short_name' => 'required|unique:units'
-        ]);
 
         return Unit::create($request->all());
     }
 
-    public function update(Request $request, Unit $unit){
-        $id = $request['id'];
+    public function update(StoreUnitPost $request, Unit $unit) {
 
-        $this->validate($request, [
-            'name' => 'required',
-            'short_name' => 'required|unique:units,short_name,'.$id
-        ]);
-
+        
         $unit = Unit::findOrFail($request['id']);
 
         $unit->update([
@@ -49,7 +41,8 @@ class UnitController extends Controller
         return $unit;
     }
 
-    public function destroy(Request $request){
+    public function destroy(Request $request) {
+        
         $count = Unit::destroy($request['id']);
 
         if($count>0){
@@ -59,7 +52,7 @@ class UnitController extends Controller
         return "Something went wrong";
     }
 
-    public function CheckUniqueShortName(Request $request){
+    public function CheckUniqueShortName(Request $request) {
 
         $short_name = $request['short_name'];
         $id = $request['id'];

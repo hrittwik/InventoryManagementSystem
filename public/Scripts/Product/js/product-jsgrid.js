@@ -1,5 +1,33 @@
 $(document).ready(function () {
 
+    var GetUnitDDL = $.noop;
+
+    GetUnitDDL = function() {
+
+        $('#unit_id').empty();
+        var defaultOption = "<option value=''>Select a unit</option>";
+        $('#unit_id').append(defaultOption);
+        
+        $.ajax({
+            type: "GET",
+            url: "/unit/GetAll",
+            success: function(data) {
+
+                $.each(data, function(key, object) {
+                    
+                    var text = object.short_name;
+                    var value = object.id;
+                    
+                    var option = "<option value='" + value + "'>" + text + "</option>";
+                    $('#unit_id').append(option);
+
+                }); 
+            }
+        });
+    }
+
+    GetUnitDDL();
+
     $("#jsGrid").jsGrid({
         height: "auto",
         width: "100%",
@@ -108,7 +136,7 @@ $(document).ready(function () {
         fields: [
             { name: "name", title: "Name", type: "text", css: "text-transform: capitalize", width: "21.9%" },
             { name: "short_name", title: "Short Name", type: "text", css: "text-transform: capitalize", width: "21.9%" },
-            { name: "unit_id", title: "Unit", type: "text", css: "text-transform: capitalize", width: "21.9%" },
+            { name: "unit.short_name", title: "Unit", type: "text", css: "text-transform: capitalize", width: "21.9%" },
             { name: "description", title: "Description", type: "text", css: "text-transform: capitalize", width: "21.9%" },
             {
                 width: "12.5%",

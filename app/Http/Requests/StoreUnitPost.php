@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreVendorPost extends FormRequest implements SanitizePostRequestInterface
+class StoreUnitPost extends FormRequest implements SanitizePostRequestInterface
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,9 +28,8 @@ class StoreVendorPost extends FormRequest implements SanitizePostRequestInterfac
         $id = (!is_null($this['id']) ? $this['id'] : '');
 
         return [
-            'name' => 'required|max:191|unique:vendors,name,'.$id,
-            'contact' => 'required|max:191',
-            'address' => 'max:191'
+            'name' => 'required|max:255',
+            'short_name' => 'required|max:10|unique:units,short_name,'.$id
         ];
     }
 
