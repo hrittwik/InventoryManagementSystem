@@ -18,6 +18,9 @@ Route::get('/', function () {
 Route::get('/product', 'ProductController@index');
 Route::get('/product/GetAll', 'ProductController@GetAll');
 Route::get('/product/CheckUniqueShortName', 'ProductController@CheckUniqueShortName');
+Route::post('/product/store', 'ProductController@store');
+Route::patch('/product/update', 'ProductController@update');
+Route::delete('/product/delete', 'ProductController@destroy');
 
 /* Vendor Routes */
 Route::get('/vendor', 'VendorController@index');

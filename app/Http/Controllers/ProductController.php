@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreProductPost;
 
 class ProductController extends Controller
 {
@@ -11,24 +12,45 @@ class ProductController extends Controller
 
         $menu = "product";
 
-        return view('product.index')->with('menu', $menu);
+        return view('product.index', compact('menu', $menu));
     }
 
     public function GetAll() {
 
-        return Product::find(1)->unit;
+        return Product::all();
 
     }
 
-    public function store(Request $request, Product $product) {
+    public function store(StoreProductPost $request) {
 
-        $this->validate($request, [
-            'name' => 'required',
-            'short_name' => 'required|unique:products|max:10',
-            'unit_id' => 'required',
+        return Product::create($request->all());
+    }
+
+    public function update(StoreProductPost $request, Product $product) {
+
+        $product = Product::findOrFail($request['id']);
+
+        $product->update([
+            'name' => $request['name'],
+            'short_name' => $request['short_name'],
+            'unit_id' => $request['unit_id'],
+            'description' => $request['description']
         ]);
+
+        return $product;
     }
 
+    public function destroy(Request $request) {
+
+        $count = Product::destroy($request['id']);
+
+        if($count > 0) {
+            return "Successfully Deleted";
+        }
+
+        return "Something went wrong!";
+
+    }
 
     public function CheckUniqueShortName(Request $request) {
         $short_name = $request['short_name'];

@@ -54,17 +54,19 @@ $(document).ready(function () {
 
                 var CSRF_TOKEN = $('input[name="_token"]').attr('value');
 
+                var jsonData = {
+                    _token: CSRF_TOKEN,
+                    id: item.id,
+                    name: item.name,
+                    contact: item.contact,
+                    address: item.address
+                };
+
                 return $.ajax({
                     type: "PATCH",
                     url: "/vendor/update",
                     dataType: "JSON",
-                    data: {
-                        _token: CSRF_TOKEN,
-                        id: item.id,
-                        name: item.name,
-                        contact: item.contact,
-                        address: item.address
-                    },
+                    data: jsonData,
                     error: function (response) {
                         if(response.status == 422) {
                             alert('Server Side Error!');
@@ -127,9 +129,6 @@ $(document).ready(function () {
         }
     });
 
-
-
-
     $.validator.addMethod("unique", function (value, element) {
         var id = ($('#id').val() != '' ? $('#id').val() : '');
 
@@ -152,19 +151,18 @@ $(document).ready(function () {
         return isUnique;
     });
 
-
     $("#detailsForm").validate({
         rules: {
             name: {
                 required: true,
-                unique: true,
+                unique: true
             },
             contact: "required"
         },
         messages: {
             name: {
                 required: "This field is required",
-                unique: "Name must be a unique",
+                unique: "Name must be a unique"
             },
             contact: "Please enter contact information",
         },

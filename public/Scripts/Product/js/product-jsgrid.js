@@ -21,7 +21,7 @@ $(document).ready(function () {
 
                 return $.ajax({
                     type: "GET",
-                    url: "/product/GetAll",
+                    url: "/product/GetAll"
                 });
 
             },
@@ -32,9 +32,12 @@ $(document).ready(function () {
                 var jsonData = {
                     _token: CSRF_TOKEN,
                     name: item.name,
-                    contact: item.contact,
-                    address: item.address
+                    short_name: item.short_name,
+                    unit_id: item.unit_id,
+                    description: item.description
                 };
+
+                console.log(jsonData);
 
                 return $.ajax({
                     type: "POST",
@@ -54,17 +57,20 @@ $(document).ready(function () {
 
                 var CSRF_TOKEN = $('input[name="_token"]').attr('value');
 
+                var jsonData = {
+                    _token: CSRF_TOKEN,
+                    id: item.id,
+                    name: item.name,
+                    short_name: item.short_name,
+                    unit_id: item.unit_id,
+                    description: item.description
+                };
+
                 return $.ajax({
                     type: "PATCH",
                     url: "/product/update",
                     dataType: "JSON",
-                    data: {
-                        _token: CSRF_TOKEN,
-                        id: item.id,
-                        name: item.name,
-                        contact: item.contact,
-                        address: item.address
-                    },
+                    data: jsonData,
                     error: function (response) {
                         if(response.status == 422) {
                             alert('Server Side Error!');
@@ -128,9 +134,7 @@ $(document).ready(function () {
         }
     });
 
-
-
-
+    
     $.validator.addMethod("unique", function (value, element) {
         var id = ($('#id').val() != '' ? $('#id').val() : '');
 
@@ -138,10 +142,10 @@ $(document).ready(function () {
 
         $.ajax({
             type: "GET",
-            url: "/product/CheckUniqueName",
+            url: "/product/CheckUniqueShortName",
             data: {
                 id: id,
-                name: value
+                short_name: value
             },
             async: false,
             success: function (response) {
@@ -187,23 +191,25 @@ $(document).ready(function () {
 
         $('#id').val(product.id);
         $("#name").val(product.name);
-        $("#contact").val(product.contact);
-        $("#address").val(product.address);
+        $("#short_name").val(product.short_name);
+        $("#unit_id").val(product.unit_id);
+        $("#description").val(product.description);
 
         formSubmitHandler = function() {
-            saveproduct(product, dialogType === "Add");
+            saveProduct(product, dialogType === "Add");
         };
 
         $("#detailsDialog").dialog("option", "title", dialogType + " Product")
             .dialog("open");
     };
 
-    var saveproduct = function(product, isNew) {
+    var saveProduct = function(product, isNew) {
 
         $.extend(product, {
             name: $("#name").val(),
-            contact: $("#contact").val(),
-            address: $("#address").val(),
+            short_name: $("#short_name").val(),
+            unit_id: $("#unit_id").val(),
+            description: $("#description").val()
         });
 
         $("#jsGrid").jsGrid(isNew ? "insertItem" : "updateItem", product);

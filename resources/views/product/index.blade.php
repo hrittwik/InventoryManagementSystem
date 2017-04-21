@@ -59,7 +59,7 @@
                 <div class="row form-group">
 
                     {{ Form::label('description', 'Description:', array('class' => 'col-md-4', 'style' => 'text-align: center')) }}
-                    {{ Form::text('description', null, array('class' => 'col-md-8', 'id' => 'description') ) }}
+                    {{ Form::textarea('description', null, array('class' => 'col-md-8', 'rows' => '4', 'style' => 'resize: none') ) }}
 
                 </div>
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreVendorPost;
 use Illuminate\Auth\Access\Response;
 use PhpParser\Builder\Class_;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ class VendorController extends Controller
 
         $menu = "vendor";
 
-        return view('vendor.index')->with('menu', $menu);
+        return view('vendor.index', compact('menu', $menu));
     }
 
     public function GetAll() {
@@ -21,25 +22,13 @@ class VendorController extends Controller
         return Vendor::all();
     }
 
-    public function store(Request $request)
+    public function store(StoreVendorPost $request)
     {
-        $this->validate($request, [
-            'name' => 'required|unique:vendors',
-            'contact' => 'required'
-        ]);
-
         return Vendor::create($request->all());
     }
 
-    public function update(Request $request, Vendor $vendor)
+    public function update(StoreVendorPost $request, Vendor $vendor)
     {
-        $id = $request['id'];
-
-        $this->validate($request, [
-            'name' => 'required|unique:vendors,name,'.$id,
-            'contact' => 'required'
-        ]);
-
         $vendor = Vendor::findOrFail($request['id']);
 
         $vendor->update([
