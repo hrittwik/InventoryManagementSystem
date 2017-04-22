@@ -10,7 +10,7 @@ class ProductController extends Controller
 {
     public function index() {
 
-        $menu = "product";
+        $menu = array('menu' => 'product');
 
         return view('product.index', compact('menu', $menu));
     }
@@ -18,18 +18,6 @@ class ProductController extends Controller
     public function GetAll() {
 
         return Product::with('unit')->get();
-        
-        /*$product = Product::findOrFail(1);
-
-        $product->update([
-            'name' => 'test',
-            'short_name' => 'test',
-            'unit_id' => '1',
-            'description' => 'test'
-        ]);
-
-        return $product->with('unit')->get();*/
-
     }
 
     public function store(StoreProductPost $request) {

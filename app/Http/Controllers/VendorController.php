@@ -12,7 +12,8 @@ class VendorController extends Controller
 {
     public function index() {
 
-        $menu = "vendor";
+        //$menu = "vendor";
+        $menu = array('menu' => 'vendor');
 
         return view('vendor.index', compact('menu', $menu));
     }

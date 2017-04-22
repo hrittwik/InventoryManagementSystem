@@ -12,7 +12,8 @@
 */
 
 Route::get('/', function () {
-    return view('dashboard')->with('menu', $menu='');
+    $menu = array('menu' => 'dashboard');
+    return view('dashboard', compact('menu'));
 });
 
 /* Product Routes */

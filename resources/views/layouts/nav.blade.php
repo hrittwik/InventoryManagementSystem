@@ -23,31 +23,31 @@
 
             <!-- Optionally, you can add icons to the links -->
 
-            <li class="{{ ($menu == "" ? "active" : "#") }}">
+            <li class="{{ ($menu['menu'] == "dashboard" ? "active" : "#") }}">
                 <a href="{{ url('/') }}"> <i class="fa fa-home"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
 
-            <li class="{{ ($menu == "product" ? "active" : "#") }}">
+            <li class="{{ ($menu['menu'] == "product" ? "active" : "#") }}">
                 <a href="{{ url('/product') }}"><i class="fa fa-folder" aria-hidden="true"></i>
                     <span>Product</span>
                 </a>
             </li>
 
-            <li class="{{ ($menu == "vendor" ? "active" : "#") }}">
+            <li class="{{ ($menu['menu'] == "vendor" ? "active" : "#") }}">
                 <a href="{{ url('/vendor') }}"><i class="fa fa-building-o"></i>
                     <span>Vendor</span>
                 </a>
             </li>
 
-            <li class="{{ ($menu == "unit" ? "active" : "#") }}">
+            <li class="{{ ($menu['menu'] == "unit" ? "active" : "#") }}">
                 <a href="{{ url('/unit') }}"><i class="fa fa-balance-scale" aria-hidden="true"></i>
                     <span>Unit</span>
                 </a>
             </li>
 
-            <li class="{{ (array_key_exists('menu', $menu) ? "active" : "#") }} treeview">
+            <li class="{{ ($menu['menu'] == "purchase" ? "active" : "#") }} treeview">
                 <a href="#"><i class="fa fa-link"></i> <span>Purchase</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
@@ -56,7 +56,11 @@
 
                 <ul class="treeview-menu">
 
-                    <li class="{{ ($menu == "purchase" ? "active" : "#") }}">
+                    @if(array_key_exists('sub-menu', $menu))
+                        <li class="{{ ($menu['sub-menu'] == 'purchase-index' ? 'active' : '#') }}">
+                    @else
+                        <li class="#">
+                    @endif
                         <a href="{{ url('/purchase') }}"><i class="fa fa-circle-o"></i> Index</a>
                     </li>
 

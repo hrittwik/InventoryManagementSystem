@@ -13,7 +13,8 @@ class UnitController extends Controller
     //
     public function index() {
 
-        $menu = "unit";
+        $menu = array('menu' => 'unit');
+
         return view('unit.index', compact('menu'));
     }
 
