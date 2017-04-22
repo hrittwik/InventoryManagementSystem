@@ -46,18 +46,23 @@
                     <span>Unit</span>
                 </a>
             </li>
-            {{--<li class="treeview">
-              <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li class="active"><a href="#">Link in level 2</a></li>
-                <li><a href="#">Link in level 2</a></li>
-              </ul>
-            </li>--}}
-      </ul>
+
+            <li class="{{ (array_key_exists('menu', $menu) ? "active" : "#") }} treeview">
+                <a href="#"><i class="fa fa-link"></i> <span>Purchase</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+
+                <ul class="treeview-menu">
+
+                    <li class="{{ ($menu == "purchase" ? "active" : "#") }}">
+                        <a href="{{ url('/purchase') }}"><i class="fa fa-circle-o"></i> Index</a>
+                    </li>
+
+                </ul>
+
+        </ul>
       <!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->

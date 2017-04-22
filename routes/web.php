@@ -14,6 +14,7 @@
 Route::get('/', function () {
     return view('dashboard')->with('menu', $menu='');
 });
+
 /* Product Routes */
 Route::get('/product', 'ProductController@index');
 Route::get('/product/GetAll', 'ProductController@GetAll');
@@ -30,6 +31,8 @@ Route::post('/vendor/store', 'VendorController@store');
 Route::patch('/vendor/update', 'VendorController@update');
 Route::delete('/vendor/delete', 'VendorController@destroy');
 
+/* Purchase Routes */
+Route::get('/purchase', 'PurchaseController@index');
 
 /* Unit Routes */
 Route::get('/unit', 'UnitController@index');
