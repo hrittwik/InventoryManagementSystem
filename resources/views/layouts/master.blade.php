@@ -57,7 +57,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 				<ul class="nav navbar-nav">
 					
 					<!-- User Account Menu -->
-					<li class="dropdown user user-menu">
+					{{--<li class="dropdown user user-menu">
 						<!-- Menu Toggle Button -->
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 							<!-- The user image in the navbar-->
@@ -76,7 +76,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 								</p>
 							</li>
 
-							{{-- <!-- Menu Body -->
+							--}}{{-- <!-- Menu Body -->
 							<li class="user-body">
 								<div class="row">
 									<div class="col-xs-4 text-center">
@@ -90,7 +90,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									</div>
 								</div>
 								<!-- /.row -->
-							</li> --}}
+							</li> --}}{{--
 
 							<!-- Menu Footer-->
 							<li class="user-footer">
@@ -102,7 +102,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 								</div>
 							</li>
 						</ul>
-					</li>
+					</li>--}}
 
 					
 				</ul>
