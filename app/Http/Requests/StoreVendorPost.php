@@ -29,8 +29,8 @@ class StoreVendorPost extends FormRequest implements SanitizePostRequestInterfac
 
         return [
             'name' => 'required|max:191|unique:vendors,name,'.$id,
-            'contact' => 'required|max:191',
-            'address' => 'max:191'
+            'contact' => 'required|max:50',
+            'address' => 'max:255'
         ];
     }
 
