@@ -101,45 +101,48 @@
             <div class="box-header"></div>
             <div class="box-body">
                 <div class="row container-fluid">
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                        <tr style="background-color: lightskyblue">
-                            <th>SL</th>
-                            <th>Product</th>
-                            <th>Unit</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                            <th>Total Price</th>
-                        </tr>
-                        </thead>
+                    <div style="overflow-x:auto;">
 
-                        <tbody>
-                        <tr>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                        </tr>
-                        <tr>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                        </tr>
-                        <tr>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr style="background-color: lightskyblue">
+                                <th>SL</th>
+                                <th>Product</th>
+                                <th>Unit</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Total Price</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr>
+                                <td>test</td>
+                                <td>test</td>
+                                <td>test</td>
+                                <td>test</td>
+                                <td>test</td>
+                                <td>test</td>
+                            </tr>
+                            <tr>
+                                <td>test</td>
+                                <td>test</td>
+                                <td>test</td>
+                                <td>test</td>
+                                <td>test</td>
+                                <td>test</td>
+                            </tr>
+                            <tr>
+                                <td>test</td>
+                                <td>test</td>
+                                <td>test</td>
+                                <td>test</td>
+                                <td>test</td>
+                                <td>test</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <div class="row" style="text-align: center">
