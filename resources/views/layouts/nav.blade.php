@@ -48,7 +48,7 @@
             </li>
 
             <li class="{{ ($menu['menu'] == "purchase" ? "active" : "#") }} treeview">
-                <a href="#"><i class="fa fa-link"></i> <span>Purchase</span>
+                <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <span>Purchase</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>

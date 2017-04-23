@@ -155,7 +155,7 @@ $(document).ready(function () {
 
     $("#detailsDialog").dialog({
         autoOpen: false,
-        width: 600,
+        width: "auto",
         close: function() {
             $("#detailsForm").validate().resetForm();
             $("#detailsForm").find(".error").removeClass("error");

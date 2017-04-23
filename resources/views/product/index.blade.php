@@ -23,53 +23,43 @@
 
 @section('content')
 
-    <div id="jsGrid" class="jsgrid-cell jsgrid-pager"></div>
+    <div id="jsGrid"></div>
 
     {{-- dialog form --}}
     <div id="detailsDialog">
 
         {{ Form::open(array('id' => 'detailsForm', 'autocomplete' => 'off') ) }}
 
-            <div class="container-fluid">
-                <br/>
+        <div class="container-fluid">
+            <div class="row form-group">
+                {!! Form::label('name', 'Name:', ['class' => 'col-md-4 col-xs-12']) !!}
+                {!! Form::input('text', 'name', null, ['class' => 'col-md-8 col-xs-12']) !!}
 
-                <div class="row form-group">
-
-                    {{ Form::label('name', 'Name:', array('class' => 'col-md-4', 'style' => 'text-align: center')) }}
-                    {{ Form::text('name', null, array('class' => 'col-md-8', 'id' => 'name') ) }}
-
-                    {{ Form::hidden('id', null, array('id' => 'id')) }}
-
-                </div>
-
-                <div class="row form-group">
-
-                    {{ Form::label('short_name', 'Short Name:', array('class' => 'col-md-4', 'style' => 'text-align: center')) }}
-                    {{ Form::text('short_name', null, array('class' => 'col-md-8', 'id' => 'short_name') ) }}
-
-                </div>
-
-                <div class="row form-group">
-
-                    {{ Form::label('unit_id', 'Unit:', array('class' => 'col-md-4', 'style' => 'text-align: center')) }}
-                    {!! Form::select('unit_id', [], null, ['class' => 'col-md-8']) !!}
-
-                </div>
-
-                <div class="row form-group">
-
-                    {{ Form::label('description', 'Description:', array('class' => 'col-md-4', 'style' => 'text-align: center')) }}
-                    {{ Form::textarea('description', null, array('class' => 'col-md-8', 'rows' => '4', 'style' => 'resize: none') ) }}
-
-                </div>
-
-
-                <div class="row form-group" style="text-align: center">
-
-                    {{ Form::submit('Save', array('id' => 'save') ) }}
-
-                </div>
+                {{ Form::hidden('id', null, array('id' => 'id')) }}
             </div>
+
+            <div class="row form-group">
+                {!! Form::label('short_name', 'Short Name:', ['class' => 'col-md-4 col-xs-12']) !!}
+                {!! Form::input('text', 'short_name', null, ['class' => 'col-md-8 col-xs-12']) !!}
+            </div>
+
+            <div class="row form-group">
+                {!! Form::label('unit_id', 'Unit:', ['class' => 'col-md-4 col-xs-12']) !!}
+                {!! Form::select('unit_id', [], null, ['class' => 'col-md-8 col-xs-12']) !!}
+            </div>
+
+            <div class="row form-group">
+                {!! Form::label('description', 'Description:', ['class' => 'col-md-4 col-xs-12']) !!}
+                {!! Form::textarea('description', null, array('class' => 'col-md-8 col-xs-12', 'rows' => '4', 'style' => 'resize: none') ) !!}
+            </div>
+
+            <div class="row form-group" style="text-align: center">
+
+                {{ Form::submit('Save', array('id' => 'save') ) }}
+
+            </div>
+
+        </div>
 
         {{ Form::close() }}
 
