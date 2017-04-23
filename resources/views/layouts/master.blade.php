@@ -8,6 +8,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Inventory Management System</title>
+
+    {{--<meta property="og:image" content="http://www.coachesneedsocial.com/wp-content/uploads/2014/12/BannerWCircleImages-1.jpg" />--}}
+
 	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	<!-- Bootstrap 3.3.6 -->
@@ -21,6 +24,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<!-- AdminLTE Skins -->
 	<link rel="stylesheet" href="assets/dist/css/skins/skin-purple.css">
 
+	<style>
+		hr {
+			border-style: inset;
+		}
+	</style>
 	{{-- page based CSS --}}
 	@yield('CSS')
 
