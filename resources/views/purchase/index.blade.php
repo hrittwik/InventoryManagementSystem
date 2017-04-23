@@ -1,17 +1,7 @@
 @extends('layouts.master')
 
 @section('CSS')
-    <style>
-        table, th, td {
-            border: 1px solid grey;
-        }
-        th {
-            background-color: lightskyblue;
-        }
-        tr:nth-child(even) {
-            background-color: lightgrey;
-        }
-    </style>
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 @endsection
 
 @section('page-title')
@@ -27,7 +17,7 @@
 
                 <div class="form-group">
                     {!! Form::label('date', 'Date') !!}
-                    {!! Form::input('date', 'date', null, ['class' => 'form-control']) !!}
+                    {!! Form::input('text', 'date', date('m/d/Y'), ['class' => 'form-control']) !!}
                 </div>
 
                 <div class="form-group">
@@ -104,48 +94,74 @@
         </div>
         {{-- ./ end of purchase header --}}
 
+        {{-- purchase details table --}}
         <hr/>
 
-        <table class="table">
-            <thead>
-            <tr>
-                <th>SL</th>
-                <th>Product</th>
-                <th>Unit</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Total Price</th>
-            </tr>
-            </thead>
+        <div class="box">
+            <div class="box-header"></div>
+            <div class="box-body">
+                <div class="row container-fluid">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr style="background-color: lightskyblue">
+                            <th>SL</th>
+                            <th>Product</th>
+                            <th>Unit</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total Price</th>
+                        </tr>
+                        </thead>
 
-            <tbody>
-            <tr>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-            </tr>
-            <tr>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-            </tr>
-            <tr>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-                <td>test</td>
-            </tr>
-            </tbody>
-        </table>
+                        <tbody>
+                        <tr>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                        </tr>
+                        <tr>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                        </tr>
+                        <tr>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="row" style="text-align: center">
+                    <button class="btn btn-success btn-lg">Save</button>
+                </div>
+            </div>
+
+        </div>
+        {{--./ end of purchase details table --}}
 
     </div>
+
+@endsection
+
+@section('JavaScript')
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+        $( function() {
+            $( "#date" ).datepicker();
+        } );
+    </script>
 
 @endsection
