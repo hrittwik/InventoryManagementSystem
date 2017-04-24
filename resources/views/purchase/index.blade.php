@@ -323,9 +323,11 @@
                 $('#'+row_id).remove();
 
                 siblings.each(function(index) {
+                    var new_row_id = 'tr-' + index;
                     $(this).children('td').first().text(index + 1);
-                    $(this).children('td').last().attr('onclick', 'rowRemove(tr-'+ index +')');
-                    this.setAttribute('id', 'tr-'+index);
+                    $(this).children('td').last().children('i').attr('onclick', 'removeRow(\'' + new_row_id+ '\')');
+                    this.setAttribute('id', new_row_id);
+                    console.log(this);
                 });
             }
         }
