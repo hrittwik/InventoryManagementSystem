@@ -214,6 +214,7 @@
                                             '<th>Quantity</th>' +
                                             '<th>Price</th>' +
                                             '<th>Total Price</th>' +
+                                            '<th></th>' +
                                         '</tr>' +
                                     '</thead>' +
                                     '<tbody id="tableBody"></tbody>';
@@ -265,6 +266,7 @@
                                 "<td>" + quantity_field + "</td>" +
                                 "<td>" + price_field + "</td>" +
                                 "<td>" + price_field + "</td>" +
+                                "<td style='text-align: center'><i class='btn btn-xs btn-danger fa fa-times' onclick=removeRow(\'" + row_id + "\')></i></td>" +
                             "</tr>";
 
                 $('#tableBody').append(trData);
@@ -305,6 +307,12 @@
                 }
             });
         });
+
+        function removeRow(row_id) {
+            if(row_id !== '') {
+                $('#'+row_id).remove();
+            }
+        }
     </script>
 
 @endsection
