@@ -49,9 +49,11 @@
                 </div>
                 {{-- ./ col-md-6 --}}
             </div>
+        </form>
             {{-- ./ end of purchase header --}}
             <hr />
 
+        <form id="purchaseDetails">
             {{-- purchase details --}}
             <div class="row">
                 <div class="col-md-6">
@@ -230,8 +232,9 @@
             $('#addBtn').click(function () {
 
                 var validForm = $('#addForm').valid();
+                var purchaseDetailsForm = $('#purchaseDetails').valid();
 
-                if(!$('table').length && validForm) {
+                if(!$('table').length && validForm && purchaseDetailsForm) {
                     makeTable();
                 }
 
@@ -244,6 +247,15 @@
                 },
                 messages: {
                     vendor_id: "Please enter contact information",
+                }
+            });
+
+            $('#purchaseDetails').validate({
+                rules: {
+                    product_id: "required"
+                },
+                messages: {
+                    product_id: "Please enter contact information",
                 }
             });
         });
