@@ -92,13 +92,15 @@
         <div class="row container-fluid" >
             <div class="form-group pull-right">
                 <button class="btn btn-default btn-lg" style="margin: 5px">Cancel</button>
-                <button class="btn btn-primary btn-lg" style="margin: 5px">Add</button>
+                <button id="addBtn" class="btn btn-primary btn-lg" style="margin: 5px">Add</button>
             </div>
         </div>
         {{-- ./ end of purchase header --}}
 
         {{-- purchase details table --}}
-        <hr/>
+        
+        <div id="addTable"></div>
+{{-- <hr/>
 
         <div class="box">
             <div class="box-header"></div>
@@ -153,9 +155,7 @@
                 </div>
             </div>
 
-        </div>
-        {{--./ end of purchase details table --}}
-
+        </div> --}}
     </div>
 
 @endsection
@@ -215,7 +215,6 @@
 
                             var option = "<option value=" + value + ">" + text + "</option>";
                             $('#product_id').append(option);
-                            console.log(unit_arr);
                         });
                     }
                 });
@@ -231,6 +230,49 @@
 
                 $('#unit').val(unit_arr[key]);
             });
+
+            var addTable = $.noop;
+
+            
+            
+            $('#addBtn').click(function () {
+                
+                var boxDiv = document.createElement('div');
+                boxDiv.className = 'box';
+
+                var boxHeaderDiv = document.createElement('div');
+                boxHeaderDiv.className = 'box-header';
+
+                var boxBodyDiv = document.createElement('div');
+                boxBodyDiv.className = 'box-body';
+
+                var containerDiv = document.createElement('div');
+                containerDiv.className = 'row container-fluid';
+                containerDiv.setAttribute('style', 'overflow-x:auto');
+
+                var tableHtml = '<table class="table table-bordered table-striped">'+
+                                    '<thead>'+
+                                        '<tr style="background-color: lightskyblue">'+
+                                            '<th>SL</th>'+
+                                            '<th>Product</th>'+
+                                            '<th>Unit</th>'+
+                                            '<th>Quantity</th>'+
+                                            '<th>Price</th>'+
+                                            '<th>Total Price</th>'+
+                                        '</tr>'+
+                                    '</thead>';
+
+                containerDiv.innerHTML = tableHtml;
+
+                boxBodyDiv.appendChild(containerDiv);
+
+                boxHeaderDiv.appendChild(boxBodyDiv);
+
+                boxDiv.appendChild(boxHeaderDiv);
+
+                document.getElementById('addTable').appendChild(boxDiv);
+            });
+            
             
         });
     </script>
