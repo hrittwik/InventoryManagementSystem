@@ -22,7 +22,9 @@ class ProductController extends Controller
 
     public function store(StoreProductPost $request) {
 
-        return Product::create($request->all());
+        $product = Product::create($request->all());
+
+        return Product::with('unit')->where('id', $product->id)->first();
     }
 
     public function update(StoreProductPost $request, Product $product) {

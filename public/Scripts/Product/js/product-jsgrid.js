@@ -72,6 +72,9 @@ $(document).ready(function () {
                     url: "/product/store",
                     dataType: "JSON",
                     data: jsonData,
+                    success: function (data) {
+                        console.log(data);
+                    },
                     error: function (response) {
                         if(response.status == 422) {
                             alert('Server Side Error!');

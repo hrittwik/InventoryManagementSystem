@@ -293,7 +293,6 @@
                                     "<input type='hidden' name='file_path' value='" + file_path_field +"' />";
 
                 return form_input_string;
-
             }
 
             $('#addForm').validate({
@@ -315,6 +314,11 @@
             });
         });
 
+
+    </script>
+
+    {{-- row remove from table --}}
+    <script>
         function removeRow(row_id) {
             if(row_id !== '') {
                 var row = $(document.getElementById(row_id));
@@ -327,10 +331,8 @@
                     $(this).children('td').first().text(index + 1);
                     $(this).children('td').last().children('i').attr('onclick', 'removeRow(\'' + new_row_id+ '\')');
                     this.setAttribute('id', new_row_id);
-                    console.log(this);
                 });
             }
         }
     </script>
-
 @endsection
