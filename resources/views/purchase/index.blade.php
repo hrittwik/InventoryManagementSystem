@@ -306,7 +306,7 @@
             /* for validating purchase header form  */
             $('#purchaseHeaderForm').validate({
                 rules: {
-                    vendor_id: "required"
+                    //vendor_id: "required"
                 },
                 messages: {
                     vendor_id: "Please enter contact information"
