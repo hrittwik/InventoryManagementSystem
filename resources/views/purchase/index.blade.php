@@ -1,7 +1,12 @@
 @extends('layouts.master')
 
 @section('CSS')
+
+    {{-- jquery ui css --}}
    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+   {{--CSS for input error --}}
+   <link type="text/css" rel="stylesheet" href="Scripts/Common/css/input-error.css" />
 @endsection
 
 @section('page-title')
@@ -10,159 +15,111 @@
 
 @section('content')
     <div class="container-fluid">
-        {{ Form::open(array('autocomplete' => 'off') ) }}
-        {{-- purchase header --}}
-        <div class="row">
-            <div class="col-md-6">
 
-                <?php date_default_timezone_set('Asia/Dhaka') ?>
-                <div class="form-group">
-                    {!! Form::label('date', 'Date') !!}
-                    {!! Form::input('text', 'date', date('m/d/Y'), ['class' => 'form-control']) !!}
-                </div>
+        <form id="addForm" autocomplete="off">
+            {{-- purchase header --}}
+            <div class="row">
+                <div class="col-md-6">
 
-                <div class="form-group">
-                    {!! Form::label('vendor_id', 'Vendor') !!}
-                    {!! Form::select('vendor_id', [], null, ['class' => 'form-control']) !!}
-                </div>
-
-            </div>
-            {{-- ./ col-md-6 --}}
-            <div class="col-md-6">
-
-                <div class="form-group">
-                    {!! Form::label('purchased_by', 'Purchased By') !!}
-                    {!! Form::input('text', 'purchased_by', null, ['class' => 'form-control']) !!}
-                </div>
-
-                <div class="form-group">
-                    {!! Form::label('document', 'Attach Document') !!}
-                    {{ Form::file('document', ['class' => 'form-control']) }}
-                </div>
-
-            </div>
-            {{-- ./ col-md-6 --}}
-        </div>
-        {{-- ./ end of purchase header --}}
-        <hr />
-
-        {{-- purchase details --}}
-        <div class="row">
-            <div class="col-md-6">
-
-                <div class="form-group">
-                    {!! Form::label('product_id', 'Product') !!}
-                    {!! Form::select('product_id', [], null, ['class' => 'form-control']) !!}
-                </div>
-
-            </div>
-
-            <div class="col-md-6">
-
-                <div class="form-group">
-                    {!! Form::label('unit', 'Unit') !!}
-                    {!! Form::input('unit', 'unit', null, ['class' => 'form-control', 'readonly']) !!}
-                </div>
-
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-
-                <div class="form-group">
-                    {!! Form::label('quantity', 'Quantity') !!}
-                    {!! Form::input('quantity', 'quantity', null, ['class' => 'form-control']) !!}
-                </div>
-
-            </div>
-
-            <div class="col-md-6">
-
-                <div class="form-group">
-                    {!! Form::label('price', 'Price') !!}
-                    {!! Form::input('text', 'price', null, ['class' => 'form-control']) !!}
-                </div>
-
-            </div>
-        </div>
-
-        {{ Form::close() }}
-
-        <div class="row container-fluid" >
-            <div class="form-group pull-right">
-                <button class="btn btn-default btn-lg" style="margin: 5px">Cancel</button>
-                <button id="addBtn" class="btn btn-primary btn-lg" style="margin: 5px">Add</button>
-            </div>
-        </div>
-        {{-- ./ end of purchase header --}}
-
-        {{-- purchase details table --}}
-        
-        <div id="addTable"></div>
-{{-- <hr/>
-
-        <div class="box">
-            <div class="box-header"></div>
-            <div class="box-body">
-                <div class="row container-fluid">
-                    <div style="overflow-x:auto;">
-
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                            <tr style="background-color: lightskyblue">
-                                <th>SL</th>
-                                <th>Product</th>
-                                <th>Unit</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
-                                <th>Total Price</th>
-                            </tr>
-                            </thead>
-
-                            <tbody>
-                            <tr>
-                                <td>test</td>
-                                <td>test</td>
-                                <td>test</td>
-                                <td>test</td>
-                                <td>test</td>
-                                <td>test</td>
-                            </tr>
-                            <tr>
-                                <td>test</td>
-                                <td>test</td>
-                                <td>test</td>
-                                <td>test</td>
-                                <td>test</td>
-                                <td>test</td>
-                            </tr>
-                            <tr>
-                                <td>test</td>
-                                <td>test</td>
-                                <td>test</td>
-                                <td>test</td>
-                                <td>test</td>
-                                <td>test</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                    <?php date_default_timezone_set('Asia/Dhaka') ?>
+                    <div class="form-group">
+                        {!! Form::label('date', 'Date') !!}
+                        {!! Form::input('text', 'date', date('m/d/Y'), ['class' => 'form-control']) !!}
                     </div>
+
+                    <div class="form-group">
+                        {!! Form::label('vendor_id', 'Vendor') !!}
+                        {!! Form::select('vendor_id', [], null, ['class' => 'form-control']) !!}
+                    </div>
+
+                </div>
+                {{-- ./ col-md-6 --}}
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        {!! Form::label('purchased_by', 'Purchased By') !!}
+                        {!! Form::input('text', 'purchased_by', null, ['class' => 'form-control']) !!}
+                    </div>
+
+                    <div class="form-group">
+                        {!! Form::label('document', 'Attach Document') !!}
+                        {{ Form::file('document', ['class' => 'form-control']) }}
+                    </div>
+
+                </div>
+                {{-- ./ col-md-6 --}}
+            </div>
+            {{-- ./ end of purchase header --}}
+            <hr />
+
+            {{-- purchase details --}}
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        {!! Form::label('product_id', 'Product') !!}
+                        {!! Form::select('product_id', [], null, ['class' => 'form-control']) !!}
+                    </div>
+
                 </div>
 
-                <div class="row" style="text-align: center">
-                    <button class="btn btn-success btn-lg">Save</button>
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        {!! Form::label('unit', 'Unit') !!}
+                        {!! Form::input('unit', 'unit', null, ['class' => 'form-control', 'readonly']) !!}
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        {!! Form::label('quantity', 'Quantity') !!}
+                        {!! Form::input('quantity', 'quantity', null, ['class' => 'form-control']) !!}
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        {!! Form::label('price', 'Price') !!}
+                        {!! Form::input('text', 'price', null, ['class' => 'form-control']) !!}
+                    </div>
+
                 </div>
             </div>
 
-        </div> --}}
+            <div class="row container-fluid" >
+                <div class="form-group pull-right">
+                    <input type="reset" class="btn btn-default btn-lg" style="margin: 5px" value="Cancel" />
+                    <input id="addBtn" type="reset" class="btn btn-primary btn-lg" style="margin: 5px" value="Add"/>
+
+                </div>
+            </div>
+        </form>
+        {{-- ./ end of purchase header --}}
+
+        <div id="addTable">
+            {{-- purchase details table here --}}
+
+        </div>
+
     </div>
 
 @endsection
 
 @section('JavaScript')
 
+    {{-- jquery ui js --}}
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    {{-- JS for jquery validator --}}
+    <script src="Scripts/Common/js/jquery.validate.min.js"></script>
+    <script src="Scripts/Common/js/additional-methods.min.js"></script>
 
     <script>
         $(function() {
@@ -170,8 +127,6 @@
         });
 
         $(document).ready(function () {
-
-            var unit_arr = new Array();
 
             var GetVendorDDL = function () {
 
@@ -196,6 +151,7 @@
                 });
             };
 
+            var unit_arr = new Array();
             var GetProductDDL = function () {
 
                 $('#product_id').empty();
@@ -231,12 +187,9 @@
                 $('#unit').val(unit_arr[key]);
             });
 
-            var addTable = $.noop;
+            var makeTable = $.noop;
 
-            
-            
-            $('#addBtn').click(function () {
-                
+            makeTable = function() {
                 var boxDiv = document.createElement('div');
                 boxDiv.className = 'box';
 
@@ -250,17 +203,18 @@
                 containerDiv.className = 'row container-fluid';
                 containerDiv.setAttribute('style', 'overflow-x:auto');
 
-                var tableHtml = '<table class="table table-bordered table-striped">'+
-                                    '<thead>'+
-                                        '<tr style="background-color: lightskyblue">'+
-                                            '<th>SL</th>'+
-                                            '<th>Product</th>'+
-                                            '<th>Unit</th>'+
-                                            '<th>Quantity</th>'+
-                                            '<th>Price</th>'+
-                                            '<th>Total Price</th>'+
-                                        '</tr>'+
-                                    '</thead>';
+                var tableHtml = '<table class="table table-bordered table-striped">' +
+                                    '<thead>' +
+                                        '<tr style="background-color: lightskyblue">' +
+                                            '<th>SL</th>' +
+                                            '<th>Product</th>' +
+                                            '<th>Unit</th>' +
+                                            '<th>Quantity</th>' +
+                                            '<th>Price</th>' +
+                                            '<th>Total Price</th>' +
+                                        '</tr>' +
+                                    '</thead>' +
+                                    '<tbody id="tableBody"></tbody>';
 
                 containerDiv.innerHTML = tableHtml;
 
@@ -271,9 +225,27 @@
                 boxDiv.appendChild(boxHeaderDiv);
 
                 document.getElementById('addTable').appendChild(boxDiv);
+            };
+
+            $('#addBtn').click(function () {
+
+                var validForm = $('#addForm').valid();
+
+                if(!$('table').length && validForm) {
+                    makeTable();
+                }
+
+
             });
-            
-            
+
+            $('#addForm').validate({
+                rules: {
+                    vendor_id: "required"
+                },
+                messages: {
+                    vendor_id: "Please enter contact information",
+                }
+            });
         });
     </script>
 
