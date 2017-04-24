@@ -16,7 +16,7 @@
 @section('content')
     <div class="container-fluid">
 
-        <form id="addForm" autocomplete="off">
+        <form id="purchaseHeaderForm" autocomplete="off">
             {{-- purchase header --}}
             <div class="row">
                 <div class="col-md-6">
@@ -123,7 +123,7 @@
     <script src="Scripts/Common/js/jquery.validate.min.js"></script>
     <script src="Scripts/Common/js/additional-methods.min.js"></script>
 
-    {{-- vendor dropdownlist --}}
+    {{-- method reference to load vendor dropdownlist --}}
     <script>
         function GetVendorDDL() {
 
@@ -149,7 +149,7 @@
         }
     </script>
 
-    {{-- product dropdownlist and unit disabled name --}}
+    {{-- method reference for product dropdownlist and unit disabled name --}}
     <script>
 
         function GetProductDDL() {
@@ -181,6 +181,7 @@
 
     </script>
 
+    {{-- page specific js --}}
     <script>
         $(function() {
             $("#date").datepicker();
@@ -188,9 +189,13 @@
 
         $(document).ready(function () {
 
+            /* calling method to load vendor ddl */
             GetVendorDDL();
+
+            /* calling method to load product ddl and get unit name array */
             var unit_arr = GetProductDDL();
 
+            /* js to load unit name in unit field based on option selected on product ddl */
             $('#product_id').change(function () {
 
                 var key = $('#product_id option:selected').text();
@@ -198,6 +203,7 @@
                 $('#unit').val(unit_arr[key]);
             });
 
+            /* method to make talbe */
             function makeTable() {
                 var boxDiv = document.createElement('div');
                 boxDiv.className = 'box';
@@ -237,9 +243,10 @@
                 document.getElementById('addTable').appendChild(boxDiv);
             };
 
+            /* on click event of add button making a table if doesn't exist and forms are valid */
             $('#addBtn').click(function () {
 
-                var validForm = $('#addForm').valid();
+                var validForm = $('#purchaseHeaderForm').valid();
                 var purchaseDetailsForm = $('#purchaseDetails').valid();
 
                 if(!(validForm == true && purchaseDetailsForm == true)) {
@@ -280,6 +287,7 @@
 
             });
 
+            /* method reference to load purchase header info */
             function getPurchaseHeaderInfo() {
 
                 var date_field = $('#date').val();
@@ -295,7 +303,8 @@
                 return form_input_string;
             }
 
-            $('#addForm').validate({
+            /* for validating purchase header form  */
+            $('#purchaseHeaderForm').validate({
                 rules: {
                     vendor_id: "required"
                 },
@@ -304,6 +313,7 @@
                 }
             });
 
+            /* for validating purchase details form */
             $('#purchaseDetails').validate({
                 rules: {
                     //product_id: "required"
@@ -317,7 +327,7 @@
 
     </script>
 
-    {{-- row remove from table --}}
+    {{-- method to  remove row from table --}}
     <script>
         function removeRow(row_id) {
             if(row_id !== '') {
