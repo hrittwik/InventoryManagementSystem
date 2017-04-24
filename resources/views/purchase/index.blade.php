@@ -51,8 +51,8 @@
             <div class="col-md-6">
 
                 <div class="form-group">
-                    {!! Form::label('short_name', 'Product Short Name') !!}
-                    {!! Form::input('short_name', 'short_name', null, ['class' => 'form-control']) !!}
+                    {!! Form::label('product_id', 'Product') !!}
+                    {!! Form::select('product_id', [], null, ['class' => 'form-control']) !!}
                 </div>
 
             </div>
@@ -60,8 +60,8 @@
             <div class="col-md-6">
 
                 <div class="form-group">
-                    {!! Form::label('product_id', 'Product') !!}
-                    {!! Form::select('product_id', [], null, ['class' => 'form-control']) !!}
+                    {!! Form::label('unit', 'Unit') !!}
+                    {!! Form::input('unit', 'unit', null, ['class' => 'form-control', 'readonly']) !!}
                 </div>
 
             </div>
@@ -170,11 +170,30 @@
         });
 
         $(document).ready(function () {
+
+            var unit_arr = new Array();
+
             var GetVendorDDL = function () {
 
                 $('#vendor_id').empty();
                 var defaultOption = "<option value='' selected>Select a vendor</option>";
                 $('#vendor_id').append(defaultOption);
+
+                $.ajax({
+                    type: "GET",
+                    url: "/vendor/GetAll",
+                    success: function (data) {
+                        
+                        $.each(data, function (key, object) {
+
+                            var value = object.id;
+                            var text = object.name;
+
+                            var option = "<option value=" + value + ">" + text + "</option>";
+                            $('#vendor_id').append(option);
+                        });
+                    }
+                });
             };
 
             var GetProductDDL = function () {
@@ -182,10 +201,37 @@
                 $('#product_id').empty();
                 var defaultOption = "<option value='' selected>Select a product</option>";
                 $('#product_id').append(defaultOption);
+
+                $.ajax({
+                    type: "GET",
+                    url: "/product/GetAll",
+                    success: function (data) {
+                        
+                        $.each(data, function (key, object) {
+
+                            unit_arr[object.name] = object.unit.short_name;
+                            var value = object.id;
+                            var text = object.name;
+
+                            var option = "<option value=" + value + ">" + text + "</option>";
+                            $('#product_id').append(option);
+                            console.log(unit_arr);
+                        });
+                    }
+                });
+
             };
 
             GetVendorDDL();
             GetProductDDL();
+
+            $('#product_id').change(function () {
+
+                var key = $('#product_id option:selected').text();
+
+                $('#unit').val(unit_arr[key]);
+            });
+            
         });
     </script>
 
