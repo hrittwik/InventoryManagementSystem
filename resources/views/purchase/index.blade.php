@@ -241,7 +241,7 @@
                 boxDiv.appendChild(boxHeaderDiv);
 
                 document.getElementById('addTable').appendChild(boxDiv);
-            };
+            }
 
             /* on click event of add button making a table if doesn't exist and forms are valid */
             $('#addBtn').click(function () {
@@ -309,7 +309,7 @@
                     vendor_id: "required"
                 },
                 messages: {
-                    vendor_id: "Please enter contact information",
+                    vendor_id: "Please enter contact information"
                 }
             });
 
