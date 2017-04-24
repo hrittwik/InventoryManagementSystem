@@ -36,7 +36,7 @@ class ProductController extends Controller
             'description' => $request['description']
         ]);
 
-        return $product->with('unit')->first();
+        return $product->with('unit')->where('id', $request['id'])->first();
     }
 
     public function destroy(Request $request) {

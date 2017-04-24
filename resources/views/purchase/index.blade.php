@@ -123,6 +123,64 @@
     <script src="Scripts/Common/js/jquery.validate.min.js"></script>
     <script src="Scripts/Common/js/additional-methods.min.js"></script>
 
+    {{-- vendor dropdownlist --}}
+    <script>
+        function GetVendorDDL() {
+
+            $('#vendor_id').empty();
+            var defaultOption = "<option value='' selected>Select a vendor</option>";
+            $('#vendor_id').append(defaultOption);
+
+            $.ajax({
+                type: "GET",
+                url: "/vendor/GetAll",
+                success: function (data) {
+
+                    $.each(data, function (key, object) {
+
+                        var value = object.id;
+                        var text = object.name;
+
+                        var option = "<option value=" + value + ">" + text + "</option>";
+                        $('#vendor_id').append(option);
+                    });
+                }
+            });
+        }
+    </script>
+
+    {{-- product dropdownlist and unit disabled name --}}
+    <script>
+
+        function GetProductDDL() {
+            var unit_arr = new Array();
+
+            $('#product_id').empty();
+            var defaultOption = "<option value='' selected>Select a product</option>";
+            $('#product_id').append(defaultOption);
+
+            $.ajax({
+                type: "GET",
+                url: "/product/GetAll",
+                success: function (data) {
+
+                    $.each(data, function (key, object) {
+
+                        unit_arr[object.name] = object.unit.short_name;
+                        var value = object.id;
+                        var text = object.name;
+
+                        var option = "<option value=" + value + ">" + text + "</option>";
+                        $('#product_id').append(option);
+                    });
+                }
+            });
+
+            return unit_arr;
+        }
+
+    </script>
+
     <script>
         $(function() {
             $("#date").datepicker();
@@ -130,57 +188,8 @@
 
         $(document).ready(function () {
 
-            var GetVendorDDL = function () {
-
-                $('#vendor_id').empty();
-                var defaultOption = "<option value='' selected>Select a vendor</option>";
-                $('#vendor_id').append(defaultOption);
-
-                $.ajax({
-                    type: "GET",
-                    url: "/vendor/GetAll",
-                    success: function (data) {
-                        
-                        $.each(data, function (key, object) {
-
-                            var value = object.id;
-                            var text = object.name;
-
-                            var option = "<option value=" + value + ">" + text + "</option>";
-                            $('#vendor_id').append(option);
-                        });
-                    }
-                });
-            };
-
-            var unit_arr = new Array();
-            var GetProductDDL = function () {
-
-                $('#product_id').empty();
-                var defaultOption = "<option value='' selected>Select a product</option>";
-                $('#product_id').append(defaultOption);
-
-                $.ajax({
-                    type: "GET",
-                    url: "/product/GetAll",
-                    success: function (data) {
-                        
-                        $.each(data, function (key, object) {
-
-                            unit_arr[object.name] = object.unit.short_name;
-                            var value = object.id;
-                            var text = object.name;
-
-                            var option = "<option value=" + value + ">" + text + "</option>";
-                            $('#product_id').append(option);
-                        });
-                    }
-                });
-
-            };
-
             GetVendorDDL();
-            GetProductDDL();
+            var unit_arr = GetProductDDL();
 
             $('#product_id').change(function () {
 
@@ -189,9 +198,7 @@
                 $('#unit').val(unit_arr[key]);
             });
 
-            var makeTable = $.noop;
-
-            makeTable = function() {
+            function makeTable() {
                 var boxDiv = document.createElement('div');
                 boxDiv.className = 'box';
 
@@ -260,7 +267,7 @@
                 var row_id = "tr-"+index;
 
                 var trData = "<tr id='" + row_id + "'>" +
-                                "<td>" + index+1 + "</td>" +
+                                "<td>" + (index + 1) + "</td>" +
                                 "<td>" + product_name_field + "</td>" +
                                 "<td>" + unit_field + "</td>" +
                                 "<td>" + quantity_field + "</td>" +
@@ -310,7 +317,16 @@
 
         function removeRow(row_id) {
             if(row_id !== '') {
+                var row = $(document.getElementById(row_id));
+                var siblings = row.siblings();
+
                 $('#'+row_id).remove();
+
+                siblings.each(function(index) {
+                    $(this).children('td').first().text(index + 1);
+                    $(this).children('td').last().attr('onclick', 'rowRemove(tr-'+ index +')');
+                    this.setAttribute('id', 'tr-'+index);
+                });
             }
         }
     </script>
