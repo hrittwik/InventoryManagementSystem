@@ -234,12 +234,58 @@
                 var validForm = $('#addForm').valid();
                 var purchaseDetailsForm = $('#purchaseDetails').valid();
 
-                if(!$('table').length && validForm && purchaseDetailsForm) {
+                if(!(validForm == true && purchaseDetailsForm == true)) {
+                    return false;
+                }
+
+                if(!$('table').length) {
                     makeTable();
                 }
 
+                var purchase_header_input_fields = getPurchaseHeaderInfo();
+
+                var product_name_field = $('#product_id option:selected').text();
+                var product_id_field = $('#product_id').val();
+                var unit_field = $('#unit').val();
+                var quantity_field = $('#quantity').val();
+                var price_field = $('#price').val();
+
+                var product_id_input = "<input type='hidden' name='product_id' value='" + product_id_field + "' />";
+                var unit_input = "<input type='hidden' name='unit' value='" + unit_field + "' />";
+                var quantity_input = "<input type='hidden' name='quantity' value='" + quantity_field + "' />";
+                var price_input = "<input type='hidden' name='price' value='" + price_field + "' />";
+
+                var index = $('#tableBody>tr').length;
+                var row_id = "tr-"+index;
+
+                var trData = "<tr id='" + row_id + "'>" +
+                                "<td>" + index+1 + "</td>" +
+                                "<td>" + product_name_field + "</td>" +
+                                "<td>" + unit_field + "</td>" +
+                                "<td>" + quantity_field + "</td>" +
+                                "<td>" + price_field + "</td>" +
+                                "<td>" + price_field + "</td>" +
+                            "</tr>";
+
+                $('#tableBody').append(trData);
 
             });
+
+            function getPurchaseHeaderInfo() {
+
+                var date_field = $('#date').val();
+                var purchased_by_field = $('#purchased_by').val();
+                var vendor_id_field = $('#vendor_id').val();
+                var file_path_field = $('#document').val();
+
+                var form_input_string = "<input type='hidden' name='date' value='" + date_field +"' />" +
+                                    "<input type='hidden' name='purchased_by' value='" + purchased_by_field +"' />" +
+                                    "<input type='hidden' name='vendor_id' value='" + vendor_id_field +"' />" +
+                                    "<input type='hidden' name='file_path' value='" + file_path_field +"' />";
+
+                return form_input_string;
+
+            }
 
             $('#addForm').validate({
                 rules: {
@@ -252,10 +298,10 @@
 
             $('#purchaseDetails').validate({
                 rules: {
-                    product_id: "required"
+                    //product_id: "required"
                 },
                 messages: {
-                    product_id: "Please enter contact information",
+                    product_id: "Please enter contact information"
                 }
             });
         });
