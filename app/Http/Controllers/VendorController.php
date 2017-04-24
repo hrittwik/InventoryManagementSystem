@@ -12,7 +12,6 @@ class VendorController extends Controller
 {
     public function index() {
 
-        //$menu = "vendor";
         $menu = array('menu' => 'vendor');
 
         return view('vendor.index', compact('menu', $menu));
@@ -23,13 +22,11 @@ class VendorController extends Controller
         return Vendor::all();
     }
 
-    public function store(StoreVendorPost $request)
-    {
+    public function store(StoreVendorPost $request) {
         return Vendor::create($request->all());
     }
 
-    public function update(StoreVendorPost $request, Vendor $vendor)
-    {
+    public function update(StoreVendorPost $request, Vendor $vendor) {
         $vendor = Vendor::findOrFail($request['id']);
 
         $vendor->update([
@@ -41,8 +38,7 @@ class VendorController extends Controller
         return $vendor;
     }
 
-    public function destroy(Request $request)
-    {
+    public function destroy(Request $request) {
         $count = Vendor::destroy($request['id']);
 
         if($count > 0) {
@@ -52,7 +48,7 @@ class VendorController extends Controller
         return "Something went wrong!";
     }
 
-    public function CheckUniqueName(Request $request){
+    public function CheckUniqueName(Request $request) {
 
         $name = $request['name'];
         $id = $request['id'];

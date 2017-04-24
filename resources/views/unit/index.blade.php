@@ -28,20 +28,23 @@
 
     <div id="jsGrid" class="jsgrid-cell jsgrid-pager"></div>
 
+    {{-- dialog form --}}
     <div id="detailsDialog">
-        <form id="detailsForm" autocomplete="off">
-            {{ csrf_field() }}
+
+        {{ Form::open(array('id' => 'detailsForm', 'autocomplete' => 'off') ) }}
             <div class="container-fluid">
                 <br/>
                 <div class="row form-group">
-                    <label class="col-md-4" for="name" style="text-align: center">Name:</label>
-                    <input class="col-md-8" id="name" name="name" type="text" />
-                    <input id="id" name="id" type="hidden" />
+                    {{ Form::label('name', 'Name:', array('class' => 'col-md-4', 'style' => 'text-align: center')) }}
+                    {{ Form::text('name', null, array('class' => 'col-md-8', 'id' => 'name') ) }}
+                    {{ Form::hidden('id', null, array('id' => 'id')) }}
                 </div>
 
                 <div class="row form-group">
-                    <label class="col-md-4" for="short_name" style="text-align: center">Short Name:</label>
-                    <input class="col-md-8" id="short_name" name="short_name" type="text" />
+
+                    {{ Form::label('short_name', 'Short Name:', array('class' => 'col-md-4', 'style' => 'text-align: center')) }}
+                    {{ Form::text('short_name', null, array('class' => 'col-md-8', 'id' => 'short_name') ) }}
+
                 </div>
 
 
@@ -50,7 +53,7 @@
                 </div>
 
             </div>
-            
+
 
         </form>
     </div>

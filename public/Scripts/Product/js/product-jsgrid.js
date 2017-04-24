@@ -72,6 +72,9 @@ $(document).ready(function () {
                     url: "/product/store",
                     dataType: "JSON",
                     data: jsonData,
+                    success: function (data) {
+                        console.log(data);
+                    },
                     error: function (response) {
                         if(response.status == 422) {
                             alert('Server Side Error!');
@@ -155,7 +158,7 @@ $(document).ready(function () {
 
     $("#detailsDialog").dialog({
         autoOpen: false,
-        width: 600,
+        width: "auto",
         close: function() {
             $("#detailsForm").validate().resetForm();
             $("#detailsForm").find(".error").removeClass("error");
