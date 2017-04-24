@@ -69,11 +69,11 @@ return [
 
         'heroku' => [
             'driver'   => 'pgsql',
-            'host'     => parse_url(getenv("DATABASE_URL"))["ec2-54-163-252-55.compute-1.amazonaws.com"],
-            'database' => substr(parse_url(getenv("DATABASE_URL"))["d9dnag1lvrnoib"], 1),
-            'username' => parse_url(getenv("DATABASE_URL"))["gwvuaapgkghxyv"],
-            'password' => parse_url(getenv("DATABASE_URL"))["2478a3fcaebf53589168f74d577bb22bbe2c252366ff505dc363dd82fd90b036"],
-            'port' => parse_url(getenv("DATABASE_URL"))["5432"],
+            'host'     => "ec2-54-163-252-55.compute-1.amazonaws.com",
+            'database' => "d9dnag1lvrnoib",
+            'username' => "gwvuaapgkghxyv",
+            'password' => "2478a3fcaebf53589168f74d577bb22bbe2c252366ff505dc363dd82fd90b036",
+            'port' => "5432",
             'charset'  => 'utf8',
             'prefix'   => '',
             'schema'   => 'public',
