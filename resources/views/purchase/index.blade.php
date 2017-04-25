@@ -105,11 +105,13 @@
         </form>
         {{-- ./ end of purchase header --}}
 
-        <div id="addTable">
-            {{-- purchase details table here --}}
+        {{--<div id="addTable">
+            --}}{{-- purchase details table here --}}{{--
+            <input type="hidden" id="csrf_token" name="_token" value="{{ csrf_token() }}"/>
+        </div>--}}
+        {!! Form::open(array('id' => 'addTable', 'method' => 'post', 'action' => 'PurchaseController@store')) !!}
 
-        </div>
-
+        {!! Form::close() !!}
     </div>
 
 @endsection
@@ -230,7 +232,10 @@
                                             '<th></th>' +
                                         '</tr>' +
                                     '</thead>' +
-                                    '<tbody id="tableBody"></tbody>';
+                                    '<tbody id="tableBody"></tbody></table>' +
+                                    '<div class="container-fluid" style="text-align: center">' +
+                                        '<input type="submit" class="btn btn-success btn-lg" />' +
+                                    '</div>';
 
                 containerDiv.innerHTML = tableHtml;
 
@@ -246,10 +251,10 @@
             /* on click event of add button making a table if doesn't exist and forms are valid */
             $('#addBtn').click(function () {
 
-                var validForm = $('#purchaseHeaderForm').valid();
+                var purchaseHeaderForm = $('#purchaseHeaderForm').valid();
                 var purchaseDetailsForm = $('#purchaseDetails').valid();
 
-                if(!(validForm == true && purchaseDetailsForm == true)) {
+                if(!(purchaseHeaderForm == true && purchaseDetailsForm == true)) {
                     return false;
                 }
 
@@ -265,16 +270,18 @@
                 var quantity_field = $('#quantity').val();
                 var price_field = $('#price').val();
 
-                var product_id_input = "<input type='hidden' name='product_id' value='" + product_id_field + "' />";
-                var unit_input = "<input type='hidden' name='unit' value='" + unit_field + "' />";
-                var quantity_input = "<input type='hidden' name='quantity' value='" + quantity_field + "' />";
-                var price_input = "<input type='hidden' name='price' value='" + price_field + "' />";
-
                 var index = $('#tableBody>tr').length;
                 var row_id = "tr-"+index;
 
+                var product_id_input = "<input type='hidden' name='purchase_details[" + index + "][product_id]' value='" + product_id_field + "' />";
+                var unit_input = "<input type='hidden' name='purchase_details[" + index + "][unit]' value='" + unit_field + "' />";
+                var quantity_input = "<input type='hidden' name='purchase_details[" + index + "][quantity]' value='" + quantity_field + "' />";
+                var price_input = "<input type='hidden' name='purchase_details[" + index + "][price]' value='" + price_field + "' />";
+
+                var inputs = product_id_input + unit_input + quantity_input + price_input;
+
                 var trData = "<tr id='" + row_id + "'>" +
-                                "<td>" + (index + 1) + "</td>" +
+                                "<td>" + (index + 1) + inputs + "</td>" +
                                 "<td>" + product_name_field + "</td>" +
                                 "<td>" + unit_field + "</td>" +
                                 "<td>" + quantity_field + "</td>" +
@@ -309,17 +316,17 @@
                     vendor_id: "required"
                 },
                 messages: {
-                    vendor_id: "Please enter contact information"
+                    vendor_id: "Please select a vendor"
                 }
             });
 
             /* for validating purchase details form */
             $('#purchaseDetails').validate({
                 rules: {
-                    //product_id: "required"
+                    product_id: "required"
                 },
                 messages: {
-                    product_id: "Please enter contact information"
+                    product_id: "Please select a product"
                 }
             });
         });
@@ -338,8 +345,10 @@
 
                 siblings.each(function(index) {
                     var new_row_id = 'tr-' + index;
+
                     $(this).children('td').first().text(index + 1);
                     $(this).children('td').last().children('i').attr('onclick', 'removeRow(\'' + new_row_id+ '\')');
+
                     this.setAttribute('id', new_row_id);
                 });
             }

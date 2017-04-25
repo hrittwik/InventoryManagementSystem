@@ -12,4 +12,9 @@ class PurchaseController extends Controller
 
         return view('purchase.index', compact('menu', $menu));
     }
+
+    public function store(Request $request) {
+
+        dd($request['purchase_details']);
+    }
 }

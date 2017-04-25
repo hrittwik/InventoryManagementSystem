@@ -34,6 +34,7 @@ Route::delete('/vendor/delete', 'VendorController@destroy');
 
 /* Purchase Routes */
 Route::get('/purchase', 'PurchaseController@index');
+Route::post('/purchase/store', 'PurchaseController@store');
 
 /* Unit Routes */
 Route::get('/unit', 'UnitController@index');
