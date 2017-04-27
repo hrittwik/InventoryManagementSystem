@@ -54,19 +54,25 @@
                 <div class="form-check col-md-6">
 
                     <legend>Purchase option:</legend>
-                    <div class="form-group">
-                        {!! Form::radio('price_type', '1', true, ['class' => 'form-check-input']) !!}
-                        {!! Form::label('price_type', 'On credit') !!}
+                    <div class="form-group" id="amountPaid" style="display: none">
+                        {!! Form::label('optradio', 'Amount paid:') !!}
+                        {!! Form::input('text', 'amountPaid', null, ['class' => 'form-control']) !!}
                     </div>
+                    <div class="form-group radio">
+                        <label>
+                            {!! Form::radio('optradio', 'account') !!}
+                            On Account
+                        </label><br/>
 
-                    <div class="form-group">
-                        {!! Form::radio('price_type', '1', false, ['class' => 'form-check-input']) !!}
-                        {!! Form::label('price_type', 'On account') !!}
-                    </div>
+                        <label>
+                            {!! Form::radio('optradio', 'credit', true) !!}
+                            On Credit
+                        </label><br/>
+                        <label>
+                            {!! Form::radio('optradio', 'cash')  !!}
+                            On Cash
+                        </label><br/>
 
-                    <div class="form-group">
-                        {!! Form::radio('price_type', '1', false, ['class' => 'form-check-input']) !!}
-                        {!! Form::label('price_type', 'On cash') !!}
                     </div>
 
                 </div>
@@ -128,10 +134,6 @@
         </form>
         {{-- ./ end of purchase header --}}
 
-        {{--<div id="addTable">
-            --}}{{-- purchase details table here --}}{{--
-            <input type="hidden" id="csrf_token" name="_token" value="{{ csrf_token() }}"/>
-        </div>--}}
         {!! Form::open(array('id' => 'addTable', 'method' => 'post', 'action' => 'PurchaseController@store', 'onsubmit' => 'return Validate()')) !!}
 
         {!! Form::close() !!}
@@ -248,6 +250,15 @@
         });
 
         $(document).ready(function () {
+
+            $('input[name=optradio]', '#purchaseHeaderForm').click(function () {
+                var test = $('input[name=optradio]:checked', '#purchaseHeaderForm').val();
+                if(test == "account") {
+                    $('#amountPaid').show();
+                } else {
+                    $('#amountPaid').hide();
+                }
+            });
 
             /* calling method to load vendor ddl */
             GetVendorDDL();
