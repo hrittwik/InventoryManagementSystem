@@ -49,6 +49,28 @@
                 </div>
                 {{-- ./ col-md-6 --}}
             </div>
+
+            <div class="row">
+                <div class="form-check col-md-6">
+
+                    <legend>Purchase option:</legend>
+                    <div class="form-group">
+                        {!! Form::radio('price_type', '1', true, ['class' => 'form-check-input']) !!}
+                        {!! Form::label('price_type', 'On credit') !!}
+                    </div>
+
+                    <div class="form-group">
+                        {!! Form::radio('price_type', '1', false, ['class' => 'form-check-input']) !!}
+                        {!! Form::label('price_type', 'On account') !!}
+                    </div>
+
+                    <div class="form-group">
+                        {!! Form::radio('price_type', '1', false, ['class' => 'form-check-input']) !!}
+                        {!! Form::label('price_type', 'On cash') !!}
+                    </div>
+
+                </div>
+            </div>
         </form>
             {{-- ./ end of purchase header --}}
             <hr />
@@ -92,27 +114,14 @@
                         {!! Form::input('text', 'price', null, ['class' => 'form-control']) !!}
                     </div>
 
-                    <div class="form-check col-md-6">
-                        <label class="form-check-label">
-                            {!! Form::radio('price_type', 0, true, ['class' => 'form-check-input']) !!}
-                            Per unit
-                        </label>
-                        <br/>
-                        <label class="form-check-label">
-                            {!! Form::radio('price_type', 1, ['class' => 'form-check-input']) !!}
-                            Total
-                        </label>
-
-                    </div>
-
                 </div>
 
             </div>
 
             <div class="row container-fluid" >
                 <div class="form-group pull-right">
-                    <input type="reset" class="btn btn-default btn-lg" style="margin: 5px" value="Cancel" />
                     <input id="addBtn" type="reset" class="btn btn-primary btn-lg" style="margin: 5px" value="Add"/>
+                    <input type="reset" class="btn btn-default btn-lg" style="margin: 5px" value="Cancel" />
 
                 </div>
             </div>
