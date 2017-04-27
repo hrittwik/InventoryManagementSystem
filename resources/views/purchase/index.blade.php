@@ -297,7 +297,6 @@
                                             '<th>Unit</th>' +
                                             '<th>Quantity</th>' +
                                             '<th>Price</th>' +
-                                            '<th>Total Price</th>' +
                                             '<th></th>' +
                                         '</tr>' +
                                     '</thead>' +
@@ -354,7 +353,6 @@
                                 "<td>" + product_name + "</td>" +
                                 "<td>" + unit + "</td>" +
                                 "<td>" + quantity + "</td>" +
-                                "<td>" + price + "</td>" +
                                 "<td>" + price + "</td>" +
                                 "<td style='text-align: center'><i class='btn btn-xs btn-danger fa fa-times' onclick=removeRow(\'" + row_id + "\')></i></td>" +
                             "</tr>";
