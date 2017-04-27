@@ -49,6 +49,34 @@
                 </div>
                 {{-- ./ col-md-6 --}}
             </div>
+
+            <div class="row">
+                <div class="form-check col-md-6">
+
+                    <legend>Purchase option:</legend>
+                    <div class="form-group" id="amountPaid" style="display: none">
+                        {!! Form::label('optradio', 'Amount paid:') !!}
+                        {!! Form::input('text', 'amountPaid', null, ['class' => 'form-control']) !!}
+                    </div>
+                    <div class="form-group radio">
+                        <label>
+                            {!! Form::radio('optradio', 'account') !!}
+                            On Account
+                        </label><br/>
+
+                        <label>
+                            {!! Form::radio('optradio', 'credit', true) !!}
+                            On Credit
+                        </label><br/>
+                        <label>
+                            {!! Form::radio('optradio', 'cash')  !!}
+                            On Cash
+                        </label><br/>
+
+                    </div>
+
+                </div>
+            </div>
         </form>
             {{-- ./ end of purchase header --}}
             <hr />
@@ -93,23 +121,22 @@
                     </div>
 
                 </div>
+
             </div>
 
             <div class="row container-fluid" >
                 <div class="form-group pull-right">
-                    <input type="reset" class="btn btn-default btn-lg" style="margin: 5px" value="Cancel" />
                     <input id="addBtn" type="reset" class="btn btn-primary btn-lg" style="margin: 5px" value="Add"/>
+                    <input type="reset" class="btn btn-default btn-lg" style="margin: 5px" value="Cancel" />
 
                 </div>
             </div>
         </form>
         {{-- ./ end of purchase header --}}
 
-        <div id="addTable">
-            {{-- purchase details table here --}}
+        {!! Form::open(array('id' => 'addTable', 'method' => 'post', 'action' => 'PurchaseController@store', 'onsubmit' => 'return Validate()')) !!}
 
-        </div>
-
+        {!! Form::close() !!}
     </div>
 
 @endsection
@@ -125,6 +152,41 @@
 
     {{-- method reference to load vendor dropdownlist --}}
     <script>
+        function Validate() {
+
+            var purchase_header_validation = $('#purchaseHeaderForm').valid();
+
+            //alert(purchase_header_validation);
+
+            if(purchase_header_validation == true) {
+                var header_inputs = GetPurchaseHeaderInfo();
+
+                console.log(header_inputs);
+
+                $('#addTable').append(header_inputs);
+
+                return true;
+            }
+
+            return false;
+        }
+
+        /* method reference to load purchase header info */
+        function GetPurchaseHeaderInfo() {
+
+            var date_field = $('#date').val();
+            var purchased_by_field = $('#purchased_by').val();
+            var vendor_id_field = $('#vendor_id').val();
+            var file_path_field = $('#document').val();
+
+            var form_input_string = "<input type='hidden' name='purchase_header[0][date]' value='" + date_field +"' />" +
+                "<input type='hidden' name='purchase_header[0][purchased_by]' value='" + purchased_by_field +"' />" +
+                "<input type='hidden' name='purchase_header[0][vendor_id]' value='" + vendor_id_field +"' />" +
+                "<input type='hidden' name='purchase_header[0][file_path]' value='" + file_path_field +"' />";
+
+            return form_input_string;
+        }
+
         function GetVendorDDL() {
 
             $('#vendor_id').empty();
@@ -189,6 +251,15 @@
 
         $(document).ready(function () {
 
+            $('input[name=optradio]', '#purchaseHeaderForm').click(function () {
+                var test = $('input[name=optradio]:checked', '#purchaseHeaderForm').val();
+                if(test == "account") {
+                    $('#amountPaid').show();
+                } else {
+                    $('#amountPaid').hide();
+                }
+            });
+
             /* calling method to load vendor ddl */
             GetVendorDDL();
 
@@ -230,7 +301,10 @@
                                             '<th></th>' +
                                         '</tr>' +
                                     '</thead>' +
-                                    '<tbody id="tableBody"></tbody>';
+                                    '<tbody id="tableBody"></tbody></table>' +
+                                    '<div class="container-fluid" style="text-align: center">' +
+                                        '<input id="submit_btn" type="submit" class="btn btn-success btn-lg" value="Save"/>' +
+                                    '</div>';
 
                 containerDiv.innerHTML = tableHtml;
 
@@ -246,10 +320,10 @@
             /* on click event of add button making a table if doesn't exist and forms are valid */
             $('#addBtn').click(function () {
 
-                var validForm = $('#purchaseHeaderForm').valid();
+                var purchaseHeaderForm = $('#purchaseHeaderForm').valid();
                 var purchaseDetailsForm = $('#purchaseDetails').valid();
 
-                if(!(validForm == true && purchaseDetailsForm == true)) {
+                if(!(purchaseHeaderForm == true && purchaseDetailsForm == true)) {
                     return false;
                 }
 
@@ -257,29 +331,31 @@
                     makeTable();
                 }
 
-                var purchase_header_input_fields = getPurchaseHeaderInfo();
+                if(document.getElementById('submit_btn').disabled) {
+                    document.getElementById('submit_btn').disabled = false;
+                }
 
-                var product_name_field = $('#product_id option:selected').text();
-                var product_id_field = $('#product_id').val();
-                var unit_field = $('#unit').val();
-                var quantity_field = $('#quantity').val();
-                var price_field = $('#price').val();
-
-                var product_id_input = "<input type='hidden' name='product_id' value='" + product_id_field + "' />";
-                var unit_input = "<input type='hidden' name='unit' value='" + unit_field + "' />";
-                var quantity_input = "<input type='hidden' name='quantity' value='" + quantity_field + "' />";
-                var price_input = "<input type='hidden' name='price' value='" + price_field + "' />";
+                var product_name = $('#product_id option:selected').text();
+                var product_id = $('#product_id').val();
+                var unit = $('#unit').val();
+                var quantity = $('#quantity').val();
+                var price = $('#price').val();
 
                 var index = $('#tableBody>tr').length;
                 var row_id = "tr-"+index;
 
+                var hidden_input = '<input type="hidden" name="purchase_details[' + index + '][product_id]" value="' + product_id + '" />' +
+                            '<input type="hidden" name="purchase_details[' + index + '][unit]" value="' + unit + '" />' +
+                            '<input type="hidden" name="purchase_details[' + index + '][quantity]" value="' + quantity + '" />' +
+                            '<input type="hidden" name="purchase_details[' + index + '][price]" value="' + price + '" />';
+
                 var trData = "<tr id='" + row_id + "'>" +
-                                "<td>" + (index + 1) + "</td>" +
-                                "<td>" + product_name_field + "</td>" +
-                                "<td>" + unit_field + "</td>" +
-                                "<td>" + quantity_field + "</td>" +
-                                "<td>" + price_field + "</td>" +
-                                "<td>" + price_field + "</td>" +
+                                "<td><b>" + (index + 1) + "</b>" + hidden_input + "</td>" +
+                                "<td>" + product_name + "</td>" +
+                                "<td>" + unit + "</td>" +
+                                "<td>" + quantity + "</td>" +
+                                "<td>" + price + "</td>" +
+                                "<td>" + price + "</td>" +
                                 "<td style='text-align: center'><i class='btn btn-xs btn-danger fa fa-times' onclick=removeRow(\'" + row_id + "\')></i></td>" +
                             "</tr>";
 
@@ -287,29 +363,13 @@
 
             });
 
-            /* method reference to load purchase header info */
-            function getPurchaseHeaderInfo() {
-
-                var date_field = $('#date').val();
-                var purchased_by_field = $('#purchased_by').val();
-                var vendor_id_field = $('#vendor_id').val();
-                var file_path_field = $('#document').val();
-
-                var form_input_string = "<input type='hidden' name='date' value='" + date_field +"' />" +
-                                    "<input type='hidden' name='purchased_by' value='" + purchased_by_field +"' />" +
-                                    "<input type='hidden' name='vendor_id' value='" + vendor_id_field +"' />" +
-                                    "<input type='hidden' name='file_path' value='" + file_path_field +"' />";
-
-                return form_input_string;
-            }
-
             /* for validating purchase header form  */
             $('#purchaseHeaderForm').validate({
                 rules: {
                     //vendor_id: "required"
                 },
                 messages: {
-                    vendor_id: "Please enter contact information"
+                    vendor_id: "Please select a vendor"
                 }
             });
 
@@ -319,12 +379,12 @@
                     //product_id: "required"
                 },
                 messages: {
-                    product_id: "Please enter contact information"
+                    product_id: "Please select a product"
                 }
             });
         });
 
-
+    
     </script>
 
     {{-- method to  remove row from table --}}
@@ -334,14 +394,40 @@
                 var row = $(document.getElementById(row_id));
                 var siblings = row.siblings();
 
-                $('#'+row_id).remove();
+                if(siblings.length == 0) {
+                    document.getElementById('submit_btn').disabled = true;
+                }
 
-                siblings.each(function(index) {
-                    var new_row_id = 'tr-' + index;
-                    $(this).children('td').first().text(index + 1);
-                    $(this).children('td').last().children('i').attr('onclick', 'removeRow(\'' + new_row_id+ '\')');
-                    this.setAttribute('id', new_row_id);
-                });
+                var parent = document.getElementById("tableBody");
+                var child = document.getElementById(row_id);
+
+                parent.removeChild(child);
+
+                var last_row_id = 'tr-' + $('#tableBody>tr').length;
+
+                if(last_row_id != row_id) {
+                    /* doesnt require to reindex each row and hidden inputs */
+
+                    siblings.each(function(index) {
+                        var new_row_id = 'tr-' + index;
+
+                        this.setAttribute('id', new_row_id);
+                        var no_hidden_inputs = $(this).children('td').first().children('b').siblings();
+
+                        no_hidden_inputs.each(function () {
+                            /* update hidden input indexes */
+
+                            var hidden_input_name = this.name;
+                            hidden_input_name = hidden_input_name.replace(/[0-9]/g, index);
+
+                            this.setAttribute('name', hidden_input_name);
+                        });
+
+                        $(this).children('td').first().children('b').text(index + 1);
+                        $(this).children('td').last().children('i').attr('onclick', 'removeRow(\'' + new_row_id+ '\')');
+                    });
+                }
+
             }
         }
     </script>
