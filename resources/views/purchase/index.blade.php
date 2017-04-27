@@ -51,28 +51,11 @@
             </div>
 
             <div class="row">
-                <div class="form-check col-md-6">
+                <div class="col-md-6">
 
-                    <legend>Purchase option:</legend>
-                    <div class="form-group" id="amountPaid" style="display: none">
-                        {!! Form::label('optradio', 'Amount paid:') !!}
+                    <div class="form-group">
+                        {!! Form::label('amountPaid', 'Amount paid:') !!}
                         {!! Form::input('text', 'amountPaid', null, ['class' => 'form-control']) !!}
-                    </div>
-                    <div class="form-group radio">
-                        <label>
-                            {!! Form::radio('optradio', 'account') !!}
-                            On Account
-                        </label><br/>
-
-                        <label>
-                            {!! Form::radio('optradio', 'credit', true) !!}
-                            On Credit
-                        </label><br/>
-                        <label>
-                            {!! Form::radio('optradio', 'cash')  !!}
-                            On Cash
-                        </label><br/>
-
                     </div>
 
                 </div>
@@ -251,15 +234,10 @@
 
         $(document).ready(function () {
 
-            $('input[name=optradio]', '#purchaseHeaderForm').click(function () {
-                var test = $('input[name=optradio]:checked', '#purchaseHeaderForm').val();
-                if(test == "account") {
-                    $('#amountPaid').show();
-                } else {
-                    $('#amountPaid').hide();
-                }
+            $('#amountPaid').keyup(function () {
+                var amount_paid = $('#amountPaid').val();
+                $('#amount_paid').text(amount_paid);
             });
-
             /* calling method to load vendor ddl */
             GetVendorDDL();
 
@@ -289,6 +267,8 @@
                 containerDiv.className = 'row container-fluid';
                 containerDiv.setAttribute('style', 'overflow-x:auto');
 
+                var amount_paid = $('#amountPaid').val();
+
                 var tableHtml = '<table class="table table-bordered table-striped">' +
                                     '<thead>' +
                                         '<tr style="background-color: lightskyblue">' +
@@ -297,11 +277,14 @@
                                             '<th>Unit</th>' +
                                             '<th>Quantity</th>' +
                                             '<th>Price</th>' +
-                                            '<th>Total Price</th>' +
                                             '<th></th>' +
                                         '</tr>' +
                                     '</thead>' +
                                     '<tbody id="tableBody"></tbody></table>' +
+                                    '<div class="row container-fluid form-group" style="text-align: center">' +
+                                        '<b>Amount Paid:&nbsp;&nbsp;<span id="amount_paid">' + amount_paid + '</span></b><br/>' +
+                                        '<b>Total Amount:&nbsp;&nbsp;<span id="total_amount"></span></b>' +
+                                    '</div>' +
                                     '<div class="container-fluid" style="text-align: center">' +
                                         '<input id="submit_btn" type="submit" class="btn btn-success btn-lg" value="Save"/>' +
                                     '</div>';
@@ -349,12 +332,17 @@
                             '<input type="hidden" name="purchase_details[' + index + '][quantity]" value="' + quantity + '" />' +
                             '<input type="hidden" name="purchase_details[' + index + '][price]" value="' + price + '" />';
 
+                var total_amount = $('#total_amount').text();
+                if(total_amount == '') total_amount = 0;
+                total_amount = parseInt(total_amount, 10) + parseInt(price, 10);
+
+                $('#total_amount').text(total_amount);
+
                 var trData = "<tr id='" + row_id + "'>" +
                                 "<td><b>" + (index + 1) + "</b>" + hidden_input + "</td>" +
                                 "<td>" + product_name + "</td>" +
                                 "<td>" + unit + "</td>" +
                                 "<td>" + quantity + "</td>" +
-                                "<td>" + price + "</td>" +
                                 "<td>" + price + "</td>" +
                                 "<td style='text-align: center'><i class='btn btn-xs btn-danger fa fa-times' onclick=removeRow(\'" + row_id + "\')></i></td>" +
                             "</tr>";
@@ -398,6 +386,12 @@
                     document.getElementById('submit_btn').disabled = true;
                 }
 
+                var reduce_amount = $('#' + row_id + ' td:nth-last-child(2)').text();
+                var total_amount = $('#total_amount').text();
+                total_amount = parseInt(total_amount, 10) - parseInt(reduce_amount, 10);
+                if(isNaN(total_amount)) total_amount = 0;
+                $('#total_amount').text(total_amount);
+
                 var parent = document.getElementById("tableBody");
                 var child = document.getElementById(row_id);
 
@@ -427,7 +421,6 @@
                         $(this).children('td').last().children('i').attr('onclick', 'removeRow(\'' + new_row_id+ '\')');
                     });
                 }
-
             }
         }
     </script>
