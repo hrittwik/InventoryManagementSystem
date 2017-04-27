@@ -14,7 +14,6 @@ class PurchaseController extends Controller
     }
 
     public function store(Request $request) {
-
-        dd($request['purchase_details']);
+        dd($request->all());
     }
 }
