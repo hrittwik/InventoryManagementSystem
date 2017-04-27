@@ -235,6 +235,10 @@
         $(document).ready(function () {
             var total_amount = 0;
 
+            $('#amountPaid').keyup(function () {
+                var amount_paid = $('#amountPaid').val();
+                $('#amount_paid').text(amount_paid);
+            });
             /* calling method to load vendor ddl */
             GetVendorDDL();
 
@@ -264,6 +268,8 @@
                 containerDiv.className = 'row container-fluid';
                 containerDiv.setAttribute('style', 'overflow-x:auto');
 
+                var amount_paid = $('#amountPaid').val();
+
                 var tableHtml = '<table class="table table-bordered table-striped">' +
                                     '<thead>' +
                                         '<tr style="background-color: lightskyblue">' +
@@ -276,9 +282,9 @@
                                         '</tr>' +
                                     '</thead>' +
                                     '<tbody id="tableBody"></tbody></table>' +
-                                    '<div class="container-fluid">' +
-                                        '<div class="col-md-4 col-sm-6 col-xs-6 pull-right"><b>Total Amount:&nbsp;&nbsp;<span id="total_amount"></span></b>' +
-                                        '</div>' +
+                                    '<div class="row container-fluid form-group" style="text-align: center">' +
+                                        '<b>Amount Paid:&nbsp;&nbsp;<span id="amount_paid">' + amount_paid + '</span></b><br/>' +
+                                        '<b>Total Amount:&nbsp;&nbsp;<span id="total_amount"></span></b>' +
                                     '</div>' +
                                     '<div class="container-fluid" style="text-align: center">' +
                                         '<input id="submit_btn" type="submit" class="btn btn-success btn-lg" value="Save"/>' +
@@ -328,7 +334,7 @@
                             '<input type="hidden" name="purchase_details[' + index + '][price]" value="' + price + '" />';
 
                 total_amount += price;
-                $('#total_amount').append(total_amount);
+                $('#total_amount').text(total_amount);
 
                 var trData = "<tr id='" + row_id + "'>" +
                                 "<td><b>" + (index + 1) + "</b>" + hidden_input + "</td>" +
