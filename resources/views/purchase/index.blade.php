@@ -51,28 +51,11 @@
             </div>
 
             <div class="row">
-                <div class="form-check col-md-6">
+                <div class="col-md-6">
 
-                    <legend>Purchase option:</legend>
-                    <div class="form-group" id="amountPaid" style="display: none">
-                        {!! Form::label('optradio', 'Amount paid:') !!}
+                    <div class="form-group">
+                        {!! Form::label('amountPaid', 'Amount paid:') !!}
                         {!! Form::input('text', 'amountPaid', null, ['class' => 'form-control']) !!}
-                    </div>
-                    <div class="form-group radio">
-                        <label>
-                            {!! Form::radio('optradio', 'account') !!}
-                            On Account
-                        </label><br/>
-
-                        <label>
-                            {!! Form::radio('optradio', 'credit', true) !!}
-                            On Credit
-                        </label><br/>
-                        <label>
-                            {!! Form::radio('optradio', 'cash')  !!}
-                            On Cash
-                        </label><br/>
-
                     </div>
 
                 </div>
@@ -250,15 +233,7 @@
         });
 
         $(document).ready(function () {
-
-            $('input[name=optradio]', '#purchaseHeaderForm').click(function () {
-                var test = $('input[name=optradio]:checked', '#purchaseHeaderForm').val();
-                if(test == "account") {
-                    $('#amountPaid').show();
-                } else {
-                    $('#amountPaid').hide();
-                }
-            });
+            var total_amount = 0;
 
             /* calling method to load vendor ddl */
             GetVendorDDL();
@@ -301,6 +276,10 @@
                                         '</tr>' +
                                     '</thead>' +
                                     '<tbody id="tableBody"></tbody></table>' +
+                                    '<div class="container-fluid">' +
+                                        '<div class="col-md-4 col-sm-6 col-xs-6 pull-right"><b>Total Amount:&nbsp;&nbsp;<span id="total_amount"></span></b>' +
+                                        '</div>' +
+                                    '</div>' +
                                     '<div class="container-fluid" style="text-align: center">' +
                                         '<input id="submit_btn" type="submit" class="btn btn-success btn-lg" value="Save"/>' +
                                     '</div>';
@@ -348,6 +327,9 @@
                             '<input type="hidden" name="purchase_details[' + index + '][quantity]" value="' + quantity + '" />' +
                             '<input type="hidden" name="purchase_details[' + index + '][price]" value="' + price + '" />';
 
+                total_amount += price;
+                $('#total_amount').append(total_amount);
+
                 var trData = "<tr id='" + row_id + "'>" +
                                 "<td><b>" + (index + 1) + "</b>" + hidden_input + "</td>" +
                                 "<td>" + product_name + "</td>" +
@@ -364,7 +346,7 @@
             /* for validating purchase header form  */
             $('#purchaseHeaderForm').validate({
                 rules: {
-                    vendor_id: "required"
+                    //vendor_id: "required"
                 },
                 messages: {
                     vendor_id: "Please select a vendor"
@@ -425,7 +407,6 @@
                         $(this).children('td').last().children('i').attr('onclick', 'removeRow(\'' + new_row_id+ '\')');
                     });
                 }
-
             }
         }
     </script>
