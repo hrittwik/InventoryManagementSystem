@@ -7,5 +7,6 @@
 /.vagrant
 Homestead.json
 Homestead.yaml
+<<<<<<< HEAD
 .env
 /local env
