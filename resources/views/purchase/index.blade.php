@@ -333,9 +333,9 @@
                             '<input type="hidden" name="purchase_details[' + index + '][price]" value="' + price + '" />';
 
                 var total_amount = $('#total_amount').text();
+                if(total_amount == '') total_amount = 0;
                 total_amount = parseInt(total_amount, 10) + parseInt(price, 10);
 
-                if(isNaN(total_amount)) total_amount = 0;
                 $('#total_amount').text(total_amount);
 
                 var trData = "<tr id='" + row_id + "'>" +
