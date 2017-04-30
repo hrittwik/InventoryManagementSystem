@@ -264,12 +264,12 @@
                 boxBodyDiv.className = 'box-body';
 
                 var containerDiv = document.createElement('div');
-                containerDiv.className = 'row container-fluid';
-                containerDiv.setAttribute('style', 'overflow-x:auto');
+                /*containerDiv.className = 'row container-fluid';
+                containerDiv.setAttribute('style', '');*/
 
                 var amount_paid = $('#amountPaid').val();
 
-                var tableHtml = '<table class="table table-bordered table-striped">' +
+                var tableHtml = '<div class="row container-fluid" style="overflow-x:auto"><table class="table table-bordered table-striped">' +
                                     '<thead>' +
                                         '<tr style="background-color: lightskyblue">' +
                                             '<th>SL</th>' +
@@ -280,12 +280,12 @@
                                             '<th></th>' +
                                         '</tr>' +
                                     '</thead>' +
-                                    '<tbody id="tableBody"></tbody></table>' +
-                                    '<div class="row container-fluid form-group" style="text-align: center">' +
+                                    '<tbody id="tableBody"></tbody></table></div>' +
+                                    '<div class="row container-fluid form-group">' +
                                         '<b>Amount Paid:&nbsp;&nbsp;<span id="amount_paid">' + amount_paid + '</span></b><br/>' +
                                         '<b>Total Amount:&nbsp;&nbsp;<span id="total_amount"></span></b>' +
                                     '</div>' +
-                                    '<div class="container-fluid" style="text-align: center">' +
+                                    '<div class="row container-fluid" style="text-align: center">' +
                                         '<input id="submit_btn" type="submit" class="btn btn-success btn-lg" value="Save"/>' +
                                     '</div>';
 
