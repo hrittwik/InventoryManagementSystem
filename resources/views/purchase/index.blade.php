@@ -256,6 +256,7 @@
             function makeTable() {
                 var boxDiv = document.createElement('div');
                 boxDiv.className = 'box';
+                boxDiv.setAttribute('id', 'boxDiv');
 
                 var boxHeaderDiv = document.createElement('div');
                 boxHeaderDiv.className = 'box-header';
@@ -281,13 +282,15 @@
                                         '</tr>' +
                                     '</thead>' +
                                     '<tbody id="tableBody"></tbody></table></div>' +
-                                    '<div class="row container-fluid form-group">' +
+                                    '<div class="row form-group container-fluid"><div class="col-md-4 col-md-offset-8 col-sm-5 col-sm-offset-7 col-xs-6 col-xs-offset-6">' +
                                         '<b>Amount Paid:&nbsp;&nbsp;<span id="amount_paid">' + amount_paid + '</span></b><br/>' +
                                         '<b>Total Amount:&nbsp;&nbsp;<span id="total_amount"></span></b>' +
-                                    '</div>' +
-                                    '<div class="row container-fluid" style="text-align: center">' +
-                                        '<input id="submit_btn" type="submit" class="btn btn-success btn-lg" value="Save"/>' +
-                                    '</div>';
+                                    '</div></div>' +
+                                    '<div class="row container-fluid">' +
+                                        '<div class="form-group pull-right">' +
+                                            '<input id="submit_btn" type="submit" class="btn btn-success btn-lg" style="margin: 5px" value="Save" onclick="if(confirm(\'Do you want to continue?\')) return true; else return false;"/>' +
+                                            '<input id="table_reset_btn" type="reset" class="btn btn-default btn-lg" style="margin: 5px" value="Cancel" onclick="removeTable()"/>' +
+                                    '</div></div>';
 
                 containerDiv.innerHTML = tableHtml;
 
@@ -377,6 +380,11 @@
     
     </script>
 
+    <script>
+        function removeTable() {
+            $('#boxDiv').remove();
+        }
+    </script>
     {{-- method to  remove row from table --}}
     <script>
         function removeRow(row_id) {
