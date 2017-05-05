@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class PurchaseController extends Controller
 {
@@ -14,6 +15,7 @@ class PurchaseController extends Controller
     }
 
     public function store(Request $request) {
-        dd($request->all());
+        //dd($request->all());
+        return $request->file('document')->store('purchase_attachments');
     }
 }

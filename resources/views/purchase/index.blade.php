@@ -16,7 +16,8 @@
 @section('content')
     <div class="container-fluid">
 
-        <form id="purchaseHeaderForm" autocomplete="off">
+        <form id="purchaseHeaderForm" method="POST" action="/purchase/store" autocomplete="off">
+            {!! csrf_field() !!}
             {{-- purchase header --}}
             <div class="row">
                 <div class="col-md-6">
@@ -64,7 +65,8 @@
             {{-- ./ end of purchase header --}}
             <hr />
 
-        <form id="purchaseDetails">
+        <form id="purchaseDetails" method="POST" action="/purchase/store">
+            {!! csrf_field() !!}
             {{-- purchase details --}}
             <div class="row">
                 <div class="col-md-6">
@@ -117,7 +119,7 @@
         </form>
         {{-- ./ end of purchase header --}}
 
-        {!! Form::open(array('id' => 'addTable', 'method' => 'post', 'action' => 'PurchaseController@store', 'onsubmit' => 'return Validate()')) !!}
+        {!! Form::open(array('id' => 'tableForm', 'method' => 'post', 'files' => true , 'action' => 'PurchaseController@store', 'onsubmit' => 'return Validate()')) !!}
 
         {!! Form::close() !!}
     </div>
@@ -135,41 +137,6 @@
 
     {{-- method reference to load vendor dropdownlist --}}
     <script>
-        function Validate() {
-
-            var purchase_header_validation = $('#purchaseHeaderForm').valid();
-
-            //alert(purchase_header_validation);
-
-            if(purchase_header_validation == true) {
-                var header_inputs = GetPurchaseHeaderInfo();
-
-                console.log(header_inputs);
-
-                $('#addTable').append(header_inputs);
-
-                return true;
-            }
-
-            return false;
-        }
-
-        /* method reference to load purchase header info */
-        function GetPurchaseHeaderInfo() {
-
-            var date_field = $('#date').val();
-            var purchased_by_field = $('#purchased_by').val();
-            var vendor_id_field = $('#vendor_id').val();
-            var file_path_field = $('#document').val();
-
-            var form_input_string = "<input type='hidden' name='purchase_header[0][date]' value='" + date_field +"' />" +
-                "<input type='hidden' name='purchase_header[0][purchased_by]' value='" + purchased_by_field +"' />" +
-                "<input type='hidden' name='purchase_header[0][vendor_id]' value='" + vendor_id_field +"' />" +
-                "<input type='hidden' name='purchase_header[0][file_path]' value='" + file_path_field +"' />";
-
-            return form_input_string;
-        }
-
         function GetVendorDDL() {
 
             $('#vendor_id').empty();
@@ -196,7 +163,6 @@
 
     {{-- method reference for product dropdownlist and unit disabled name --}}
     <script>
-
         function GetProductDDL() {
             var unit_arr = new Array();
 
@@ -223,7 +189,6 @@
 
             return unit_arr;
         }
-
     </script>
 
     {{-- page specific js --}}
@@ -236,6 +201,7 @@
 
             $('#amountPaid').keyup(function () {
                 var amount_paid = $('#amountPaid').val();
+                if(amount_paid == '') amount_paid = 0;
                 $('#amount_paid').text(amount_paid);
             });
             /* calling method to load vendor ddl */
@@ -252,109 +218,6 @@
                 $('#unit').val(unit_arr[key]);
             });
 
-            /* method to make talbe */
-            function makeTable() {
-                var boxDiv = document.createElement('div');
-                boxDiv.className = 'box';
-                boxDiv.setAttribute('id', 'boxDiv');
-
-                var boxHeaderDiv = document.createElement('div');
-                boxHeaderDiv.className = 'box-header';
-
-                var boxBodyDiv = document.createElement('div');
-                boxBodyDiv.className = 'box-body';
-
-                var containerDiv = document.createElement('div');
-                /*containerDiv.className = 'row container-fluid';
-                containerDiv.setAttribute('style', '');*/
-
-                var amount_paid = $('#amountPaid').val();
-
-                var tableHtml = '<div class="row container-fluid" style="overflow-x:auto"><table class="table table-bordered table-striped">' +
-                                    '<thead>' +
-                                        '<tr style="background-color: lightskyblue">' +
-                                            '<th>SL</th>' +
-                                            '<th>Product</th>' +
-                                            '<th>Unit</th>' +
-                                            '<th>Quantity</th>' +
-                                            '<th>Price</th>' +
-                                            '<th></th>' +
-                                        '</tr>' +
-                                    '</thead>' +
-                                    '<tbody id="tableBody"></tbody></table></div>' +
-                                    '<div class="row form-group container-fluid"><div class="col-md-4 col-md-offset-8 col-sm-5 col-sm-offset-7 col-xs-6 col-xs-offset-6">' +
-                                        '<b>Amount Paid:&nbsp;&nbsp;<span id="amount_paid">' + amount_paid + '</span></b><br/>' +
-                                        '<b>Total Amount:&nbsp;&nbsp;<span id="total_amount"></span></b>' +
-                                    '</div></div>' +
-                                    '<div class="row container-fluid">' +
-                                        '<div class="form-group pull-right">' +
-                                            '<input id="submit_btn" type="submit" class="btn btn-success btn-lg" style="margin: 5px" value="Save" onclick="if(confirm(\'Do you want to continue?\')) return true; else return false;"/>' +
-                                            '<input id="table_reset_btn" type="reset" class="btn btn-default btn-lg" style="margin: 5px" value="Cancel" onclick="removeTable()"/>' +
-                                    '</div></div>';
-
-                containerDiv.innerHTML = tableHtml;
-
-                boxBodyDiv.appendChild(containerDiv);
-
-                boxHeaderDiv.appendChild(boxBodyDiv);
-
-                boxDiv.appendChild(boxHeaderDiv);
-
-                document.getElementById('addTable').appendChild(boxDiv);
-            }
-
-            /* on click event of add button making a table if doesn't exist and forms are valid */
-            $('#addBtn').click(function () {
-
-                var purchaseHeaderForm = $('#purchaseHeaderForm').valid();
-                var purchaseDetailsForm = $('#purchaseDetails').valid();
-
-                if(!(purchaseHeaderForm == true && purchaseDetailsForm == true)) {
-                    return false;
-                }
-
-                if(!$('table').length) {
-                    makeTable();
-                }
-
-                if(document.getElementById('submit_btn').disabled) {
-                    document.getElementById('submit_btn').disabled = false;
-                }
-
-                var product_name = $('#product_id option:selected').text();
-                var product_id = $('#product_id').val();
-                var unit = $('#unit').val();
-                var quantity = $('#quantity').val();
-                var price = $('#price').val();
-
-                var index = $('#tableBody>tr').length;
-                var row_id = "tr-"+index;
-
-                var hidden_input = '<input type="hidden" name="purchase_details[' + index + '][product_id]" value="' + product_id + '" />' +
-                            '<input type="hidden" name="purchase_details[' + index + '][unit]" value="' + unit + '" />' +
-                            '<input type="hidden" name="purchase_details[' + index + '][quantity]" value="' + quantity + '" />' +
-                            '<input type="hidden" name="purchase_details[' + index + '][price]" value="' + price + '" />';
-
-                var total_amount = $('#total_amount').text();
-                // remove it after validation
-                if(price == '') price = 0;
-                if(total_amount == '') total_amount = 0;
-                total_amount = parseInt(total_amount, 10) + parseInt(price, 10);
-
-                $('#total_amount').text(total_amount);
-
-                var trData = "<tr id='" + row_id + "'>" +
-                                "<td><b>" + (index + 1) + "</b>" + hidden_input + "</td>" +
-                                "<td>" + product_name + "</td>" +
-                                "<td>" + unit + "</td>" +
-                                "<td>" + quantity + "</td>" +
-                                "<td>" + price + "</td>" +
-                                "<td style='text-align: center'><i class='btn btn-xs btn-danger fa fa-times' onclick=removeRow(\'" + row_id + "\')></i></td>" +
-                            "</tr>";
-
-                $('#tableBody').append(trData);
-
-            });
 
             /* for validating purchase header form  */
             $('#purchaseHeaderForm').validate({
@@ -375,18 +238,160 @@
                     product_id: "Please select a product"
                 }
             });
+
+            /* on click event of add button making a table if doesn't exist and forms are valid */
+            $('#addBtn').click(function () {
+                addRow();
+            });
+
         });
 
     
     </script>
 
-    <script>
-        function removeTable() {
-            $('#boxDiv').remove();
-        }
-    </script>
     {{-- method to  remove row from table --}}
     <script>
+        function Validate() {
+
+            var purchase_header_validation = $('#purchaseHeaderForm').valid();
+
+            if(purchase_header_validation == true) {
+
+                GetPurchaseHeaderInfo();
+
+                return true;
+            }
+
+            return false;
+        }
+
+        /* method reference to load purchase header info */
+        function GetPurchaseHeaderInfo() {
+
+            var date_field = $('#date').clone();
+            date_field.attr('style', 'display: none');
+
+            var purchased_by_field = $('#purchased_by').clone();
+            purchased_by_field.attr('style', 'display: none');
+
+            var vendor_id_field = $('#vendor_id').clone();
+            vendor_id_field.attr('style', 'display: none');
+
+            var document_field = $('#document').clone();
+            document_field.attr('style', 'display: none');
+
+            var amount_paid_field = $('#amountPaid').clone();
+            amount_paid_field.attr('style', 'display: none');
+
+            $('#tableForm').append(date_field);
+            $('#tableForm').append(purchased_by_field);
+            $('#tableForm').append(vendor_id_field);
+            $('#tableForm').append(document_field);
+            $('#tableForm').append(amount_paid_field);
+        }
+
+        /* method to make talbe */
+        function makeTable() {
+            var boxDiv = document.createElement('div');
+            boxDiv.className = 'box';
+            boxDiv.setAttribute('id', 'boxDiv');
+
+            var boxHeaderDiv = document.createElement('div');
+            boxHeaderDiv.className = 'box-header';
+
+            var boxBodyDiv = document.createElement('div');
+            boxBodyDiv.className = 'box-body';
+
+            var containerDiv = document.createElement('div');
+
+            var amount_paid = $('#amountPaid').val();
+            if(amount_paid == '') amount_paid = 0;
+
+            var tableHtml = '<div class="row container-fluid" style="overflow-x:auto"><table class="table table-bordered table-striped">' +
+                '<thead>' +
+                '<tr style="background-color: lightskyblue">' +
+                '<th>SL</th>' +
+                '<th>Product</th>' +
+                '<th>Unit</th>' +
+                '<th>Quantity</th>' +
+                '<th>Price</th>' +
+                '<th></th>' +
+                '</tr>' +
+                '</thead>' +
+                '<tbody id="tableBody"></tbody></table></div>' +
+                '<div class="row form-group container-fluid"><div class="col-lg-4 col-lg-offset-8 col-md-6 col-md-offset-6 col-sm-6 col-sm-offset-6 col-xs-6 col-xs-offset-6">' +
+                '<b>Amount Paid:&nbsp;&nbsp;<span id="amount_paid">' + amount_paid + '</span></b><br/>' +
+                '<b>Total Amount:&nbsp;&nbsp;<span id="total_amount"></span></b>' +
+                '</div></div>' +
+                '<div class="row container-fluid">' +
+                '<div class="form-group pull-right">' +
+                '<input id="submit_btn" type="submit" class="btn btn-success btn-lg" style="margin: 5px" value="Save" onclick="if(confirm(\'Do you want to continue?\')) return true; else return false;"/>' +
+                '</div></div>';
+
+            containerDiv.innerHTML = tableHtml;
+
+            boxBodyDiv.appendChild(containerDiv);
+
+            boxHeaderDiv.appendChild(boxBodyDiv);
+
+            boxDiv.appendChild(boxHeaderDiv);
+
+            document.getElementById('tableForm').appendChild(boxDiv);
+        }
+
+        function addRow() {
+            var purchaseHeaderForm = $('#purchaseHeaderForm').valid();
+            var purchaseDetailsForm = $('#purchaseDetails').valid();
+
+            if(!(purchaseHeaderForm == true && purchaseDetailsForm == true)) {
+                return false;
+            }
+
+            if(!$('table').length) {
+                makeTable();
+            }
+
+            if(document.getElementById('submit_btn').disabled) {
+                document.getElementById('submit_btn').disabled = false;
+            }
+
+            var product_name = $('#product_id option:selected').text();
+            var product_id = $('#product_id').val();
+            var unit = $('#unit').val();
+            var quantity = $('#quantity').val();
+            var price = $('#price').val();
+
+            var index = $('#tableBody>tr').length;
+            var row_id = "tr-"+index;
+
+            var hidden_input = '<input type="hidden" name="purchase_details[' + index + '][product_id]" value="' + product_id + '" />' +
+                '<input type="hidden" name="purchase_details[' + index + '][unit]" value="' + unit + '" />' +
+                '<input type="hidden" name="purchase_details[' + index + '][quantity]" value="' + quantity + '" />' +
+                '<input type="hidden" name="purchase_details[' + index + '][price]" value="' + price + '" />';
+
+            var total_amount = $('#total_amount').text();
+
+            // remove it after validation
+            if(price == '') price = 0;
+            // ./ remove it after validation
+
+            if(total_amount == '') total_amount = 0;
+            total_amount = parseInt(total_amount, 10) + parseInt(price, 10);
+
+            $('#total_amount').text(total_amount);
+
+            var trData = "<tr id='" + row_id + "'>" +
+                "<td><b>" + (index + 1) + "</b>" + hidden_input + "</td>" +
+                "<td>" + product_name + "</td>" +
+                "<td>" + unit + "</td>" +
+                "<td>" + quantity + "</td>" +
+                "<td>" + price + "</td>" +
+                "<td style='text-align: center'><i class='btn btn-xs btn-danger fa fa-times' onclick=removeRow(\'" + row_id + "\')></i></td>" +
+                "</tr>";
+
+            $('#tableBody').append(trData);
+        }
+        /* function remove row from table */
         function removeRow(row_id) {
             if(row_id !== '') {
                 var row = $(document.getElementById(row_id));
