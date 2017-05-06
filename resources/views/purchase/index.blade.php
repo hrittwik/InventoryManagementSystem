@@ -93,7 +93,7 @@
 
                     <div class="form-group">
                         {!! Form::label('quantity', 'Quantity') !!}
-                        {!! Form::input('quantity', 'quantity', null, ['class' => 'form-control']) !!}
+                        {!! Form::input('text', 'quantity', null, ['class' => 'form-control']) !!}
                     </div>
 
                 </div>
@@ -224,20 +224,37 @@
             $('#purchaseHeaderForm').validate({
                 rules: {
                     date: "required",
-                    purchased_by: "required",
-                    document: "required",
+                    purchased_by: {
+                        required: true,
+                        lettersonly: true
+                    },
+                    document: {
+                        required: true,
+                        extension: "png|jpeg|jpg"
+                    },
                     vendor_id: "required",
                     amountPaid: "number"
+                },
+                messages: {
+                    document: {
+                        extension: "Invalid file extension. Please upload file with (jpg/jpeg/png) file extension"
+                    },
+                    amountPaid: "The value should be a number"
                 }
             });
 
             /* for validating purchase details form */
             $('#purchaseDetails').validate({
                 rules: {
-                    //product_id: "required"
-                },
-                messages: {
-                    product_id: "Please select a product"
+                    product_id: "required",
+                    price: {
+                        required: true,
+                        number: true
+                    },
+                    quantity: {
+                        required: true,
+                        number: true
+                    }
                 }
             });
 
