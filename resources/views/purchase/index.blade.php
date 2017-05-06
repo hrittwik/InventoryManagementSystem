@@ -102,7 +102,7 @@
 
                     <div class="form-group">
                         {!! Form::label('price', 'Price') !!}
-                        {!! Form::input('text', 'price', null, ['class' => 'form-control']) !!}
+                        {!! Form::input('text', 'price', null, ['class' => 'form-control', 'placeholder' => 'Price per unit']) !!}
                     </div>
 
                 </div>
@@ -119,6 +119,7 @@
         </form>
         {{-- ./ end of purchase header --}}
 
+        {{-- table div --}}
         {!! Form::open(array('id' => 'tableForm', 'method' => 'post', 'files' => true , 'action' => 'PurchaseController@store', 'onsubmit' => 'return Validate()')) !!}
 
         {!! Form::close() !!}
@@ -222,10 +223,11 @@
             /* for validating purchase header form  */
             $('#purchaseHeaderForm').validate({
                 rules: {
-                    //vendor_id: "required"
-                },
-                messages: {
-                    vendor_id: "Please select a vendor"
+                    date: "required",
+                    purchased_by: "required",
+                    document: "required",
+                    vendor_id: "required",
+                    amountPaid: "number"
                 }
             });
 
@@ -251,12 +253,16 @@
 
     {{-- method to  remove row from table --}}
     <script>
+        /* method validates purchase header form before posting */
         function Validate() {
-
+            /*
+            *  $('#purchaseHeaderForm').valid() is jquery validation plugin method
+            * */
             var purchase_header_validation = $('#purchaseHeaderForm').valid();
 
             if(purchase_header_validation == true) {
 
+                /* GetPurchaseHeaderInfo() adds the header input fields to the form for posting */
                 GetPurchaseHeaderInfo();
 
                 return true;
@@ -290,7 +296,7 @@
             $('#tableForm').append(amount_paid_field);
         }
 
-        /* method to make talbe */
+        /* method to make table */
         function makeTable() {
             var boxDiv = document.createElement('div');
             boxDiv.className = 'box';
@@ -339,7 +345,12 @@
             document.getElementById('tableForm').appendChild(boxDiv);
         }
 
+        /* method adds row with purchase details data */
         function addRow() {
+            /*
+            * $('#purchaseHeaderForm').valid() & $('#purchaseDetails').valid()
+            * is jquery validation plugin method
+            * */
             var purchaseHeaderForm = $('#purchaseHeaderForm').valid();
             var purchaseDetailsForm = $('#purchaseDetails').valid();
 
@@ -347,10 +358,16 @@
                 return false;
             }
 
+            /*
+            * if no table tag exist the page a table is created
+            * */
             if(!$('table').length) {
                 makeTable();
             }
 
+            /*
+            * enable save button if save button is disabled
+            * */
             if(document.getElementById('submit_btn').disabled) {
                 document.getElementById('submit_btn').disabled = false;
             }
@@ -359,7 +376,7 @@
             var product_id = $('#product_id').val();
             var unit = $('#unit').val();
             var quantity = $('#quantity').val();
-            var price = $('#price').val();
+            var price = $('#price').val() * quantity;
 
             var index = $('#tableBody>tr').length;
             var row_id = "tr-"+index;
@@ -369,15 +386,14 @@
                 '<input type="hidden" name="purchase_details[' + index + '][quantity]" value="' + quantity + '" />' +
                 '<input type="hidden" name="purchase_details[' + index + '][price]" value="' + price + '" />';
 
-            var total_amount = $('#total_amount').text();
-
             // remove it after validation
             if(price == '') price = 0;
             // ./ remove it after validation
 
+            /* update total_price */
+            var total_amount = $('#total_amount').text();
             if(total_amount == '') total_amount = 0;
             total_amount = parseInt(total_amount, 10) + parseInt(price, 10);
-
             $('#total_amount').text(total_amount);
 
             var trData = "<tr id='" + row_id + "'>" +
@@ -391,32 +407,46 @@
 
             $('#tableBody').append(trData);
         }
-        /* function remove row from table */
+
+        /* method removes row from table; takes row_id as a parameter */
         function removeRow(row_id) {
             if(row_id !== '') {
                 var row = $(document.getElementById(row_id));
                 var siblings = row.siblings();
 
+                /*
+                * if last row is removed from the table save button is disabled
+                * */
                 if(siblings.length == 0) {
                     document.getElementById('submit_btn').disabled = true;
                 }
 
+                /*
+                * price for the row removed is deducted from the total price
+                * */
                 var reduce_amount = $('#' + row_id + ' td:nth-last-child(2)').text();
                 var total_amount = $('#total_amount').text();
                 total_amount = parseInt(total_amount, 10) - parseInt(reduce_amount, 10);
                 if(isNaN(total_amount)) total_amount = 0;
                 $('#total_amount').text(total_amount);
 
+                /*
+                * to remove row from table
+                * */
                 var parent = document.getElementById("tableBody");
                 var child = document.getElementById(row_id);
-
                 parent.removeChild(child);
 
+                /*
+                * get the last row id
+                * */
                 var last_row_id = 'tr-' + $('#tableBody>tr').length;
 
+                /* if last row is removed re-index isn't necessary  */
                 if(last_row_id != row_id) {
-                    /* doesnt require to reindex each row and hidden inputs */
-
+                    /*
+                    * re-indexing sibling rows of the row removed
+                    * */
                     siblings.each(function(index) {
                         var new_row_id = 'tr-' + index;
 
@@ -425,10 +455,8 @@
 
                         no_hidden_inputs.each(function () {
                             /* update hidden input indexes */
-
                             var hidden_input_name = this.name;
                             hidden_input_name = hidden_input_name.replace(/[0-9]/g, index);
-
                             this.setAttribute('name', hidden_input_name);
                         });
 

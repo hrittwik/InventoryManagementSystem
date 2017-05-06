@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use function MongoDB\BSON\toJSON;
 
 class PurchaseController extends Controller
 {
@@ -15,7 +17,16 @@ class PurchaseController extends Controller
     }
 
     public function store(Request $request) {
-        //dd($request->all());
-        return $request->file('document')->store('purchase_attachments');
+
+        /*
+         * To do:
+         * 1. validate request
+         * 2. store purchase header info
+         * 3. store attach document
+         * 4. store purchase details */
+
+        //dd(date("Y/F"));
+        dd($request->all());
+        return $request->file('document')->store('purchase_attachments/'.date("Y/F"));
     }
 }
