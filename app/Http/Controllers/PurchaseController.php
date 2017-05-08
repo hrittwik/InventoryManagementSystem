@@ -6,6 +6,7 @@ use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use function MongoDB\BSON\toJSON;
+use App\Http\Requests\StorePurchaseEntryPost;
 
 class PurchaseController extends Controller
 {
@@ -16,7 +17,9 @@ class PurchaseController extends Controller
         return view('purchase.index', compact('menu', $menu));
     }
 
-    public function store(Request $request) {
+    public function store(StorePurchaseEntryPost $request) {
+
+        $menu = array('menu' => 'purchase', 'sub-menu' => 'purchase-index');
 
         /*
          * To do:
@@ -25,8 +28,10 @@ class PurchaseController extends Controller
          * 3. store attach document
          * 4. store purchase details */
 
-        //dd(date("Y/F"));
-        dd($request->all());
+         dd($request->all());
+
+         return view('purchase.index', compact('menu', $menu));
+        //dd($request->all());
         return $request->file('document')->store('purchase_attachments/'.date("Y/F"));
     }
 }

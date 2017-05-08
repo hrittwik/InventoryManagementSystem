@@ -201,8 +201,7 @@
         $(document).ready(function () {
 
             $('#amountPaid').keyup(function () {
-                var amount_paid = $('#amountPaid').val();
-                if(amount_paid == '') amount_paid = 0;
+                var amount_paid = ($('#amountPaid').val() != '' ? $('amountPaid').val() : 0);
                 $('#amount_paid').text(amount_paid);
             });
             /* calling method to load vendor ddl */
@@ -220,7 +219,7 @@
             });
 
 
-            /* call addRow method on Enter keypress */ 
+            /* call addRow method on Enter keypress */
             $('#product_id, #unit, #quantity, #rate').keypress(function (e) {
                 if (e.which == 13) {
                     addRow();
@@ -230,21 +229,21 @@
             /* for validating purchase header form  */
             $('#purchaseHeaderForm').validate({
                 rules: {
-                    date: "required",
-                    purchased_by: {
-                        required: true,
-                        lettersonly: true
-                    },
-                    document: {
-                        required: true,
-                        extension: "png|jpeg|jpg"
-                    },
-                    vendor_id: "required",
-                    amountPaid: "number"
+                    // date: "required",
+                    // purchased_by: {
+                    //     required: true,
+                    //     lettersonly: true
+                    // },
+                    // document: {
+                    //     required: true,
+                    //     extension: "png|jpeg|jpg"
+                    // },
+                    // vendor_id: "required",
+                    // amountPaid: "number"
                 },
                 messages: {
                     document: {
-                        extension: "Invalid file extension. Please upload file with (jpg/jpeg/png) file extension"
+                        extension: "The document must be a file of type: png, jpeg, jpg"
                     },
                     amountPaid: "The value should be a number"
                 }
@@ -254,14 +253,14 @@
             $('#purchaseDetails').validate({
                 rules: {
                     product_id: "required",
-                    rate: {
-                        required: true,
-                        number: true
-                    },
-                    quantity: {
-                        required: true,
-                        number: true
-                    }
+                    // rate: {
+                    //     required: true,
+                    //     number: true
+                    // },
+                    // quantity: {
+                    //     required: true,
+                    //     number: true
+                    // }
                 }
             });
         });
@@ -310,6 +309,8 @@
             document_field.attr('style', 'display: none');
 
             var amount_paid_field = $('#amountPaid').clone();
+            var amountPaid = ($('#amountPaid').val() != '' ? $('#amountPaid').val() : 0);
+            amount_paid_field.attr('value', amountPaid);
             amount_paid_field.attr('style', 'display: none');
 
             $('#tableForm').append(date_field);
@@ -333,8 +334,7 @@
 
             var containerDiv = document.createElement('div');
 
-            var amount_paid = $('#amountPaid').val();
-            if(amount_paid == '') amount_paid = 0;
+            var amount_paid = ($('#amountPaid').val() != '' ? $('#amountPaid').val() : 0);
 
             var tableHtml = '<div class="row container-fluid" style="overflow-x:auto"><table class="table table-bordered table-striped">' +
                 '<thead>' +
@@ -385,22 +385,24 @@
             /*
             * if no table tag exist the page a table is created
             * */
-            if(!$('table').length) {
+            if(!$('#boxDiv').length) {
                 makeTable();
+            } else {
+                /*
+                * enable save button if save button is disabled
+                * */
+                if(document.getElementById('submit_btn').disabled) {
+                    document.getElementById('submit_btn').disabled = false;
+                }
             }
 
-            /*
-            * enable save button if save button is disabled
-            * */
-            if(document.getElementById('submit_btn').disabled) {
-                document.getElementById('submit_btn').disabled = false;
-            }
+
 
             var product_name = $('#product_id option:selected').text();
             var product_id = $('#product_id').val();
             var unit = $('#unit').val();
-            var quantity = $('#quantity').val();
-            var rate = $('#rate').val();
+            var quantity = ($('#quantity').val() != '' ? $('#quantity').val() : 0);
+            var rate = ($('#rate').val() != '' ? $('#rate').val() : 0);
             var price = rate * quantity;
 
             var index = $('#tableBody>tr').length;
@@ -412,9 +414,6 @@
                 '<input type="hidden" name="purchase_details[' + index + '][rate]" value="' + rate + '" />' +
                 '<input type="hidden" name="purchase_details[' + index + '][price]" value="' + price + '" />';
 
-            // remove it after validation
-            if(rate == '') rate = 0;
-            // ./ remove it after validation
 
             /* update total_price */
             var total_amount = $('#total_amount').text();
@@ -437,6 +436,8 @@
             /* reset form after adding row and focusing on product for next input */
             $('#product_id').focus();
             document.getElementById('purchaseDetails').reset();
+
+            $('#purchaseDetails').validate().resetForm();
         }
 
         /* method removes row from table; takes row_id as a parameter */
