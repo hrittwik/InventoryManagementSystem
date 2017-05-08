@@ -55,7 +55,7 @@
                 <div class="col-md-6">
 
                     <div class="form-group">
-                        {!! Form::label('amountPaid', 'Amount paid:') !!}
+                        {!! Form::label('amountPaid', 'Amount paid') !!}
                         {!! Form::input('text', 'amountPaid', null, ['class' => 'form-control']) !!}
                     </div>
 
@@ -101,8 +101,8 @@
                 <div class="col-md-6">
 
                     <div class="form-group">
-                        {!! Form::label('price', 'Price') !!}
-                        {!! Form::input('text', 'price', null, ['class' => 'form-control', 'placeholder' => 'Price per unit']) !!}
+                        {!! Form::label('rate', 'Rate') !!}
+                        {!! Form::input('text', 'rate', null, ['class' => 'form-control', 'placeholder' => 'Price per unit']) !!}
                     </div>
 
                 </div>
@@ -111,8 +111,8 @@
 
             <div class="row container-fluid" >
                 <div class="form-group pull-right">
-                    <input id="addBtn" type="reset" class="btn btn-primary btn-lg" style="margin: 5px" value="Add"/>
-                    <input type="reset" class="btn btn-default btn-lg" style="margin: 5px" value="Cancel" />
+                    <input id="addBtn" type="button" class="btn btn-primary btn-lg" style="margin: 5px" value="Add" onclick="addRow()"/>
+                    <input type="reset" class="btn btn-default btn-lg" style="margin: 5px" value="Cancel" onclick="resetForm()"/>
 
                 </div>
             </div>
@@ -220,6 +220,13 @@
             });
 
 
+            /* call addRow method on Enter keypress */ 
+            $('#product_id, #unit, #quantity, #rate').keypress(function (e) {
+                if (e.which == 13) {
+                    addRow();
+                }
+            });
+
             /* for validating purchase header form  */
             $('#purchaseHeaderForm').validate({
                 rules: {
@@ -247,7 +254,7 @@
             $('#purchaseDetails').validate({
                 rules: {
                     product_id: "required",
-                    price: {
+                    rate: {
                         required: true,
                         number: true
                     },
@@ -257,15 +264,9 @@
                     }
                 }
             });
-
-            /* on click event of add button making a table if doesn't exist and forms are valid */
-            $('#addBtn').click(function () {
-                addRow();
-            });
-
         });
 
-    
+
     </script>
 
     {{-- method to  remove row from table --}}
@@ -286,6 +287,11 @@
             }
 
             return false;
+        }
+
+        /* method to reset purchasde details form */
+        function resetForm() {
+            $('#purchaseDetails').validate().resetForm();
         }
 
         /* method reference to load purchase header info */
@@ -337,7 +343,8 @@
                 '<th>Product</th>' +
                 '<th>Unit</th>' +
                 '<th>Quantity</th>' +
-                '<th>Price</th>' +
+                '<th>Rate</th>' +
+                '<th>Price (&#x9f3;)</th>' +
                 '<th></th>' +
                 '</tr>' +
                 '</thead>' +
@@ -393,7 +400,8 @@
             var product_id = $('#product_id').val();
             var unit = $('#unit').val();
             var quantity = $('#quantity').val();
-            var price = $('#price').val() * quantity;
+            var rate = $('#rate').val();
+            var price = rate * quantity;
 
             var index = $('#tableBody>tr').length;
             var row_id = "tr-"+index;
@@ -401,10 +409,11 @@
             var hidden_input = '<input type="hidden" name="purchase_details[' + index + '][product_id]" value="' + product_id + '" />' +
                 '<input type="hidden" name="purchase_details[' + index + '][unit]" value="' + unit + '" />' +
                 '<input type="hidden" name="purchase_details[' + index + '][quantity]" value="' + quantity + '" />' +
+                '<input type="hidden" name="purchase_details[' + index + '][rate]" value="' + rate + '" />' +
                 '<input type="hidden" name="purchase_details[' + index + '][price]" value="' + price + '" />';
 
             // remove it after validation
-            if(price == '') price = 0;
+            if(rate == '') rate = 0;
             // ./ remove it after validation
 
             /* update total_price */
@@ -418,11 +427,16 @@
                 "<td>" + product_name + "</td>" +
                 "<td>" + unit + "</td>" +
                 "<td>" + quantity + "</td>" +
+                "<td>" + rate + "</td>" +
                 "<td>" + price + "</td>" +
                 "<td style='text-align: center'><i class='btn btn-xs btn-danger fa fa-times' onclick=removeRow(\'" + row_id + "\')></i></td>" +
                 "</tr>";
 
             $('#tableBody').append(trData);
+
+            /* reset form after adding row and focusing on product for next input */
+            $('#product_id').focus();
+            document.getElementById('purchaseDetails').reset();
         }
 
         /* method removes row from table; takes row_id as a parameter */
