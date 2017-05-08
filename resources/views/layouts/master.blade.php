@@ -128,26 +128,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<section class="content">
 
 			<!-- Content Header (Page header) -->
-			<h2>
-
-				@yield('page-title')
-
-			</h2>
+			<h2>@yield('page-title')</h2>
 
 			<hr style="border-style: inset;" />
-			<!-- Your Page Content Here -->
 
-				@if (count($errors) > 0)
-				    <div class="alert alert-danger">
-				        <ul>
-				            @foreach ($errors->all() as $error)
-				                <li>{{ $error }}</li>
-				            @endforeach
-				        </ul>
-				    </div>
-				@endif
-				
-				@yield('content')
+			<!-- error messeages -->
+			@include('layouts.errors')
+
+			<!-- Your Page Content Here -->
+			@yield('content')
 
 		</section>
 		<!-- /.content -->

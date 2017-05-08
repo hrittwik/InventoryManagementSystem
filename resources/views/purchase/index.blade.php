@@ -196,6 +196,8 @@
     <script>
         $(function() {
             $("#date").datepicker();
+        }).on('change', function (event) {
+            $('#date').valid();
         });
 
         $(document).ready(function () {
@@ -226,10 +228,28 @@
                 }
             });
 
+            $.validator.addMethod("date_before_tomorrow", function (value, element) {
+                var date_valid = true;
+
+                var currentDate = new Date();
+                var givenDate = new Date(value);
+
+                if(givenDate.getTime() > currentDate.getTime()) {
+                    date_valid = false;
+                }
+
+                return date_valid;
+
+            }, "The date must be a date before tomorrow");
+
             /* for validating purchase header form  */
             $('#purchaseHeaderForm').validate({
                 rules: {
-                    // date: "required",
+                    date: {
+                        required: true,
+                        date: true,
+                        date_before_tomorrow: true
+                    }
                     // purchased_by: {
                     //     required: true,
                     //     lettersonly: true
