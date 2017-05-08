@@ -322,8 +322,11 @@
             var purchased_by_field = $('#purchased_by').clone();
             purchased_by_field.attr('style', 'display: none');
 
-            var vendor_id_field = $('#vendor_id').clone();
-            vendor_id_field.attr('style', 'display: none');
+            var vendor_id_value = $('#vendor_id option:selected').val();
+            var vendor_id_field = '<input type="hidden" name="vendor_id" value="' + vendor_id_value + '" />';
+
+            var total_amount_value = $('#total_amount').text();
+            var total_amount_field = '<input type="hidden" name="total_amount" value="' + total_amount_value + '">';
 
             var document_field = $('#document').clone();
             document_field.attr('style', 'display: none');
@@ -338,6 +341,7 @@
             $('#tableForm').append(vendor_id_field);
             $('#tableForm').append(document_field);
             $('#tableForm').append(amount_paid_field);
+            $('#tableForm').append(total_amount_field);
         }
 
         /* method to make table */
