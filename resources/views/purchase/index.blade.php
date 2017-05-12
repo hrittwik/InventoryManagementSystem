@@ -16,6 +16,12 @@
 @section('content')
     <div class="container-fluid">
 
+        @if (session('message'))
+            <div class="alert alert-success">
+                {!! session('message') !!}
+            </div>
+        @endif
+
         <form id="purchaseHeaderForm" method="POST" action="/purchase/store" autocomplete="off">
             {!! csrf_field() !!}
             {{-- purchase header --}}

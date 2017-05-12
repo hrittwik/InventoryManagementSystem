@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use function MongoDB\BSON\toJSON;
 use App\Http\Requests\StorePurchaseEntryPost;
 use App\PurchaseHeader;
+use App\PurchaseDetail;
+use App\PurchaseAttachment;
+use Illuminate\Validation\Validator;
 
 class PurchaseController extends Controller
 {
@@ -31,15 +33,40 @@ class PurchaseController extends Controller
          * 5. return success or failur message
          */
 
-         //dd($request->all());
-
-         $purchaseHeader = PurchaseHeader::create($request->all());
-         return $purchaseHeader->purchase_details()->create($request['purchase_details'][0]);
-
-         return $purchaseHeader->purchase_details();
-
-         return view('purchase.index', compact('menu', $menu));
         //dd($request->all());
-        return $request->file('document')->store('purchase_attachments/'.date("Y/F"));
+
+        $this->validate($request, [
+            'purchase_details.*.product_id' => 'required|numeric',
+            'purchase_details.*.unit' => 'required',
+            'purchase_details.*.quantity' => 'required|numeric',
+            'purchase_details.*.rate' => 'required|numeric'
+            ]);
+
+        /* 
+        #2
+        $purchaseHeader = PurchaseHeader::create($request->all());
+                  
+        #3
+        foreach ($request['purchase_details'] as $key => $value) {
+            $purchaseHeader->purchase_details()->create($request['purchase_details'][$key]);
+        }
+
+        #4
+        // upload file to server
+        $file_path = $request->file('document')->store('public/purchase_attachments/'.date("Y/F"));
+
+        // update file path for db
+        $file_path = str_replace("public", "storage", $file_path);
+
+        // insert record into db
+        $purchaseAttachment = new PurchaseAttachment([
+            'file_path' => $file_path
+            ]);
+
+        $purchaseHeader->purchase_attachment()->save($purchaseAttachment);*/
+
+        // return redirect('/purchase')->with('message', $message);
     }
+
+
 }

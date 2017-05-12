@@ -23,14 +23,17 @@ class StorePurchaseEntryPost extends FormRequest
      */
     public function rules()
     {
-        $rules = [
+        return $rules = [
             'date' => 'required|date_format:m/d/Y|before:tomorrow',
             'purchased_by' => 'required|alpha',
             'vendor_id' => 'required|numeric',
             'amountPaid' => 'numeric',
-            'document' => 'required|mimes:png,jpeg,jpg'
+            'document' => 'required|mimes:png,jpeg,jpg',
+            'purchase_details.product_id' => 'required|numeric',
+            'purchase_details.unit' => 'required',
+            'purchase_details.quantity' => 'required|numeric',
+            'purchase_details.rate' => 'required|numeric',
         ];
-
-        return $rules;
     }
+
 }
